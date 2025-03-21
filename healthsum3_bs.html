@@ -13,7 +13,7 @@
             if (msie > 0) {
                 // IE 10 or older, return version number 
                 //return ('IE ' + parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10)); 
-                alert('msie > 0'); 
+                document.write('msie > 0'); 
                 return true;
             }
             var trident = ua.indexOf('Trident/');
@@ -21,21 +21,21 @@
                 // IE 11, return version number 
                 var rv = ua.indexOf('rv:');
                 //return ('IE ' + parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10)); 
-                alert('trident > 0'); 
+                document.write('trident > 0'); 
                 return true;
             }
             var edge = ua.indexOf('Edge/');
             if (edge > 0) {
                 //Edge (IE 12+), return version number 
                 //return ('IE ' + parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10));
-                alert('edge > 0');
+                document.write('edge > 0');
                 return true;
             }
             // User uses other browser 
             return false;
         }
         if (IEdetection()) {
-            alert("本網頁不支援IE瀏覽器，建議使用Chrome、Firefox、Edge等瀏覽器");
+            document.write("本網頁不支援IE瀏覽器，建議使用Chrome、Firefox、Edge等瀏覽器");
         }
     </script>
 </head>
