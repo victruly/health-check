@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="Access-Control-Allow-Origin" content="*" /> -->
+    <meta name="viewport" content="width=device-width, 
+    initial-scale=1.0, 
+    user-scalable=no" />
+    <link rel="shortcut icon" href="#" />
+    <title>視訊會議</title>
+    <!-- Close Google Translate, https://support.google.com/webmasters/answer/79812 -->
+    <meta name="google" content="notranslate">
+    <!-- Diable cache for Chrome -->
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-store" />
+    <meta http-equiv="expires" content="-1" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    
+    <script>
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+    </script>
+
+</head>
+
+<body id="body" ondragstart="return false" ondragend="return false">
+    check browser
+    <script type="text/javascript">
+        function SafariDetection() {
+            return /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
+        }
+        function ChromeDetection() {//iPhone上的偵測方法
+            return /CriOS/i.test(window.navigator.userAgent);
+        }
+        function IEdetection() {
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf('MSIE ');
+            if (msie > 0) {
+                // IE 10 or older, return version number 
+                //return ('IE ' + parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10)); 
+                return true;
+            }
+            var trident = ua.indexOf('Trident/');
+            if (trident > 0) {
+                // IE 11, return version number 
+                var rv = ua.indexOf('rv:');
+                //return ('IE ' + parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10)); 
+                return true;
+            }
+            var edge = ua.indexOf('Edge/');
+            if (edge > 0) {
+                //Edge (IE 12+), return version number 
+                //return ('IE ' + parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10)); 
+                return true;
+            }
+            // User uses other browser 
+            return false;
+        }
+        if (IEdetection()) {
+            // window.location.replace("./use-chrome.html?u=" + window.location.href);
+            document.write("本網頁不支援IE瀏覽器，建議使用Chrome、Firefox、Edge等瀏覽器");
+        }
+        //iPhone提示使用者用Safari
+        if (iPhoneDetection() && ChromeDetection()) {
+            window.location.replace("./use-safari.html?u=" + window.location.href);
+        }
+    </script>
+    
+</body>
+
+</html>
