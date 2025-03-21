@@ -30,6 +30,9 @@
 <body id="body" ondragstart="return false" ondragend="return false">
     check browser
     <script type="text/javascript">
+        function iPhoneDetection() { //2021/11/16 add iPad as videoConference.js
+                return (/iPhone|iPad|iPod/i.test(window.navigator.userAgent) || /Macintosh/.test(navigator.userAgent) && 'ontouchend' in document);
+        }
         function SafariDetection() {
             return /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
         }
@@ -64,7 +67,10 @@
             // window.location.replace("./use-chrome.html?u=" + window.location.href);
             document.write("本網頁不支援IE瀏覽器，建議使用Chrome、Firefox、Edge等瀏覽器");
         }
-       
+        if (iPhoneDetection() && ChromeDetection()) {
+            // window.location.replace("./use-safari.html?u=" + window.location.href);
+            document.write("./use-safari.html?u=");
+        }
     </script>
     
 </body>
