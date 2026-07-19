@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>相機浮水印測試</title>
+    <style>
+        :root {
+            --primary: #007aff;
+            --bg: #121212;
+            --surface: #1e1e1e;
+            --text: #ffffff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-weight: 600;
+            margin: 0;
+            font-size: 22px;
+        }
+        .camera-wrapper {
+            width: 100%;
+            max-width: 600px;
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 4/3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            justify-content: center;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            flex: 1;
+            max-width: 200px;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        button:disabled {
+            background-color: #444;
+            color: #888;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #snap-btn {
+            background-color: #34c759;
+        }
+        .result-container {
+            margin-top: 24px;
+            width: 100%;
+            max-width: 600px;
+            display: none;
+        }
+        .result-container h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            text-align: center;
+            color: #aaa;
+        }
+        #result-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            display: block;
+        }
+        .info {
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>公務拍照</h1>
+    </div>
+
+    <div class="camera-wrapper">
+        <div class="video-container">
+            <video id="video" autoplay playsinline></video>
+        </div>
+        <div class="controls">
+            <button id="start-btn">開啟後鏡頭</button>
+            <button id="snap-btn" disabled>拍照</button>
+        </div>
+        <div class="info">照片僅留存於網頁，不會儲存至手機相簿</div>
+    </div>
+
+    <div class="result-container" id="result-container">
+        <h2>拍攝結果</h2>
+        <img id="result-image" alt="拍攝結果">
+    </div>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const startBtn = document.getElementById('start-btn');
+        const snapBtn = document.getElementById('snap-btn');
+        const resultContainer = document.getElementById('result-container');
+        const resultImage = document.getElementById('result-image');
+
+        let stream = null;
+
+        function getCurrentDateTimeString() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        startBtn.addEventListener('click', async () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment'
+                    },
+                    audio: false
+                });
+                
+                video.srcObject = stream;
+                await video.play();
+                
+                snapBtn.disabled = false;
+                startBtn.textContent = '重新開啟鏡頭';
+            } catch (err) {
+                console.error("Error accessing camera:", err);
+                alert("無法存取相機，請確認已允許相機權限，且必須在 HTTPS 網域或 localhost 下執行。");
+            }
+        });
+
+        snapBtn.addEventListener('click', () => {
+            if (!stream) return;
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const fontSize = Math.max(Math.floor(canvas.width * 0.035), 18);
+            ctx.font = `${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif`;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'bottom';
+
+            const line1 = "Upload by vicwang";
+            const line2 = getCurrentDateTimeString();
+
+            const paddingRight = fontSize;
+            const paddingBottom = fontSize;
+
+            ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+
+            ctx.fillText(line1, canvas.width - paddingRight, canvas.height - paddingBottom - fontSize * 1.3);
+            ctx.fillText(line2, canvas.width - paddingRight, canvas.height - paddingBottom);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            resultImage.src = dataUrl;
+            resultContainer.style.display = 'block';
+            
+            setTimeout(() => {
+                resultContainer.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
