@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pteam 直播與 KMS 錄影異常流程分析圖</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --border: #e2e8f0;
+      --danger-bg: #fef2f2;
+      --danger-border: #fecaca;
+      --danger-text: #991b1b;
+      --warn-bg: #fffbeb;
+      --warn-border: #fde68a;
+      --warn-text: #92400e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 16px 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 16px;
+      background: var(--card-bg);
+      padding: 18px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .alert-box {
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background-color: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+      font-size: 14px;
+    }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .tab-btn {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: #cbd5e1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      margin-bottom: 20px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .card-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .card-header .badge {
+      font-size: 13px;
+      padding: 4px 12px;
+      background: #eff6ff;
+      color: #2563eb;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* 滿版容器 */
+    .diagram-fit-wrapper {
+      width: 100%;
+      display: block;
+      overflow: hidden;
+      min-height: 200px;
+    }
+
+    /* 強制 SVG 寬度 100% 填滿整張卡片 */
+    .diagram-fit-wrapper svg {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      margin: 0 auto;
+    }
+
+    .analysis-section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .analysis-section h2 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #0f172a;
+    }
+
+    .issue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .issue-card {
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .issue-card.warn {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+      color: var(--warn-text);
+    }
+
+    .issue-card.danger {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: var(--danger-text);
+    }
+
+    .issue-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .issue-card p {
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>
+        <span>📋</span> Pteam 直播與 KMS 錄影異常流程分析
+      </h1>
+      <p>問題根因：phqeteams08 (直播發起端) 與 phqeteams03 (前端 API 端) 之 appSettings.json 未同步，導致 MultiCall 記錄之 KMS 與實際寫入錄影檔的 KMS 不一致。</p>
+      
+      <div class="alert-box">
+        <strong>⚠️ 核心失敗原因：</strong> 錄影產檔程式依據 <code>MultiCall.Kms</code> 前往 <strong>KMS A</strong> 找檔，但前端實際串流至 <strong>KMS B</strong> 落盤 <code>.webm</code>，導致找不到檔案而轉檔失敗。
+      </div>
+    </header>
+
+    <!-- 切換標籤 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchView('sequence')">1. 時序流程圖 (Sequence Diagram)</button>
+      <button class="tab-btn" onclick="switchView('flowchart')">2. 系統架構與資料流 (Flowchart)</button>
+    </div>
+
+    <!-- 視圖 1: 時序流程圖 (滿版無橫向捲軸) -->
+    <div id="view-sequence" class="card">
+      <div class="card-header">
+        <h2>時序流程圖 (Sequence Diagram)</h2>
+        <span class="badge">滿版完整呈現</span>
+      </div>
+      <div class="diagram-fit-wrapper">
+        <pre class="mermaid-target" id="mermaid-seq">
+sequenceDiagram
+    autonumber
+    actor User as 同仁 / 發起者
+    participant Node08 as phqeteams08 (發起端)
+    participant DB as MultiCall (資料庫表記錄)
+    participant Browser as 瀏覽器 (直播頁面)
+    participant Node03 as phqeteams03 (mWeb API)
+    participant KMS_A as KMS A (08設定)
+    participant KMS_B as KMS B (03設定)
+    participant RecordJob as 錄影產檔程式
+
+    %% 階段 1
+    rect rgb(240, 248, 255)
+    Note over User, DB: 【階段 1：直播發起與 DB 記錄】
+    User->>Node08: 1. 發起 Pteam 直播會議
+    Node08->>DB: 2. 寫入 MultiCall 資料表記錄 (欄位 Kms = KMS A)
+    Note over Node08, DB: 依據 phqeteams08 自身 appSettings.json 寫入 KMS A
+    end
+
+    %% 階段 2
+    rect rgb(255, 250, 230)
+    Note over User, Node03: 【階段 2：前端載入與 API 呼叫】
+    User->>Browser: 3. 開啟直播網址 (連線至 phqeteams03 伺服器)
+    Browser->>Node03: 4. 呼叫 mWeb API 請求連線伺服器資訊
+    Node03-->>Browser: 5. 回傳 defaultServer = KMS B
+    Note over Node03, Browser: ⚠️【問題點 1】phqeteams03 之 appSettings.json 忘了同步修改！
+    end
+
+    %% 階段 3
+    rect rgb(245, 255, 250)
+    Note over Browser, KMS_B: 【階段 3：串流直播與實際錄影存檔】
+    Browser->>KMS_B: 6. 建立 WebRTC 連線並進行直播串流
+    KMS_B->>KMS_B: 7. 錄製直播視訊，原始 .webm 檔存於 KMS B 本機磁碟
+    end
+
+    %% 階段 4
+    rect rgb(255, 235, 235)
+    Note over DB, RecordJob: 【階段 4：產檔失敗】
+    RecordJob->>DB: 8. 查詢 MultiCall 直播會議表記錄
+    DB-->>RecordJob: 9. 讀取 Kms 欄位值 (KMS A)
+    RecordJob->>KMS_A: 10. 前往 KMS A 尋找該場會議 .webm 原始錄影檔
+    Note over RecordJob, KMS_A: ❌【問題點 2】檔案實際存在 KMS B，KMS A 找不到檔案！
+    KMS_A-->>RecordJob: 11. 回報找不到檔案 (File Not Found)
+    RecordJob-->>RecordJob: 12. 💥 產生錄影檔失敗！
+    end
+        </pre>
+      </div>
+    </div>
+
+    <!-- 視圖 2: 系統架構與資料流圖 -->
+    <div id="view-flowchart" class="card hidden">
+      <div class="card-header">
+        <h2>系統架構與資料流 (Flowchart)</h2>
+        <span class="badge">滿版完整呈現</span>
+      </div>
+      <div class="diagram-fit-wrapper">
+        <pre class="mermaid-target" id="mermaid-flow">
+flowchart TD
+    subgraph S1 [發起端 phqeteams08]
+        A["同仁於 phqeteams08 發起直播"] --> B["讀取 08 之 appSettings.json"]
+        B --> C["寫入 MultiCall 表<br/>Kms 欄位 = KMS A"]
+    end
+
+    subgraph S2 [前端觀看端 phqeteams03]
+        D["開啟 phqeteams03 網頁<br/>video-conferencingWebBroadCast.html"] --> E["呼叫 phqeteams03 mWeb API"]
+        E --> F["讀取 03 之 appSettings.json<br/>⚠️ 未同步設定！"]
+        F --> G["取得 defaultServer = KMS B"]
+    end
+
+    subgraph S3 [直播與檔案存取 實際執行]
+        G --> H["瀏覽器連線至 KMS B 直播"]
+        H --> I["🔴 原始 .webm 實際存在 KMS B"]
+    end
+
+    subgraph S4 [錄影產檔程式邏輯]
+        C -.-> J["讀取 MultiCall.Kms 欄位 (KMS A)"]
+        J --> K["前往 KMS A 搜尋 .webm 檔案"]
+        K --> L{"KMS A 是否有檔案？"}
+        L -->|無檔案 實際在 KMS B| M["💥 產生錄影檔失敗"]
+    end
+
+    style F fill:#ffeedd,stroke:#ff9900,stroke-width:2px
+    style I fill:#e6ffe6,stroke:#00aa00,stroke-width:2px
+    style M fill:#ffe6e6,stroke:#cc0000,stroke-width:2px
+        </pre>
+      </div>
+    </div>
+
+    <!-- 分析與改善建議 -->
+    <div class="analysis-section">
+      <h2>關鍵節點與分析說明</h2>
+      <div class="issue-grid">
+        <div class="issue-card warn">
+          <h3>1. 設定不一致來源</h3>
+          <p>主機 <code>phqeteams08</code> 與 <code>phqeteams03</code> 各自讀取本機的 <code>appSettings.json</code>。當維運人員修改了 08 但忘了同步更新 03 時，雙方指向不同的 KMS 實例。</p>
+        </div>
+        <div class="issue-card danger">
+          <h3>2. 資料與實體檔案脫節</h3>
+          <p>資料庫 <code>MultiCall.Kms</code> 記錄的是 08 所認定的 KMS A，但前端實際上連到 03 回傳的 KMS B 並儲存 <code>.webm</code>，產檔程式信賴 DB 資訊因此撲空找不到檔案。</p>
+        </div>
+        <div class="issue-card">
+          <h3>3. 架構修復建議</h3>
+          <p>
+            • <strong>根本解法</strong>：前端頁面應根據會議識別碼向 API 查詢 <code>MultiCall.Kms</code>，連線到該會議當初指定的 KMS。<br>
+            • <strong>組態解法</strong>：將各主機的 KMS 配置集中化管理，避免分散設定造成人工遺漏。
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: false, // 改由 JS 動態渲染，避免隱藏時渲染引發 SVG 尺寸計算錯誤
+      theme: 'default',
+      securityLevel: 'loose',
+      sequence: {
+        diagramMarginX: 30,
+        diagramMarginY: 20,
+        boxMargin: 15,
+        boxTextMargin: 8,
+        noteMargin: 12,
+        messageMargin: 35,
+        useMaxWidth: true,
+        fontSize: 15,
+        actorFontSize: 15,
+        noteFontSize: 14,
+        messageFontSize: 14,
+        mirrorActors: false
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
+    });
+
+    const rendered = {
+      sequence: false,
+      flowchart: false
+    };
+
+    function fitSvgToFullWidth() {
+      document.querySelectorAll('.diagram-fit-wrapper svg').forEach(svg => {
+        svg.style.maxWidth = '100%';
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+        svg.removeAttribute('width');
+      });
+    }
+
+    async function renderDiagram(type) {
+      if (type === 'sequence' && !rendered.sequence) {
+        rendered.sequence = true;
+        const node = document.getElementById('mermaid-seq');
+        if (node) {
+          await mermaid.run({ nodes: [node] });
+          fitSvgToFullWidth();
+        }
+      } else if (type === 'flowchart' && !rendered.flowchart) {
+        rendered.flowchart = true;
+        const node = document.getElementById('mermaid-flow');
+        if (node) {
+          await mermaid.run({ nodes: [node] });
+          fitSvgToFullWidth();
+        }
+      }
+    }
+
+    async function switchView(type) {
+      const seqView = document.getElementById('view-sequence');
+      const flowView = document.getElementById('view-flowchart');
+      const buttons = document.querySelectorAll('.tab-btn');
+
+      if (type === 'sequence') {
+        seqView.classList.remove('hidden');
+        flowView.classList.add('hidden');
+        buttons[0].classList.add('active');
+        buttons[1].classList.remove('active');
+        await renderDiagram('sequence');
+      } else {
+        seqView.classList.add('hidden');
+        flowView.classList.remove('hidden');
+        buttons[0].classList.remove('active');
+        buttons[1].classList.add('active');
+        await renderDiagram('flowchart');
+      }
+      fitSvgToFullWidth();
+    }
+
+    // 初次載入先渲染當前可見的 sequence 圖表
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDiagram('sequence');
+    });
+  </script>
+</body>
+</html>
