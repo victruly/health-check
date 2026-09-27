@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="h-full">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,9 +19,19 @@
       color: #1E293B;
       margin: 0;
       padding: 0;
+      letter-spacing: -0.025em; /* 縮小字與字中間的間隔 (Tighter character spacing) */
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Presentation Slide Mode: Strictly Full Viewport, Expansive Full Width & Height, NO Scrollbar */
+    *, *::before, *::after {
+      letter-spacing: inherit;
+    }
+
+    h1, h2, h3, h4, h5, h6, .font-bold, .font-black, .font-extrabold {
+      letter-spacing: -0.035em; /* 標題與重點字距更緊實凝聚 */
+    }
+
+    /* Presentation Slide Mode: Strictly Full Viewport (No Vertical Page Scrollbar) */
     body:not(.continuous-mode) {
       height: 100vh;
       height: 100dvh;
@@ -31,13 +41,16 @@
     }
     body:not(.continuous-mode) main {
       flex: 1 1 0%;
+      height: calc(100vh - 54px);
       height: calc(100dvh - 54px);
       max-height: calc(100dvh - 54px);
       overflow: hidden;
-      width: 100%;
-      max-width: 100%;
       display: flex;
       flex-direction: column;
+      width: 100%;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     body:not(.continuous-mode) .slide.active {
       height: 100%;
@@ -45,10 +58,10 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: hidden;
+      overflow: hidden; /* 確保簡報模式下絕對不會出現外層垂直捲軸 */
     }
 
-    /* Crisp Light Scrollbar for internal table only */
+    /* Crisp Light Scrollbar for internal table or scroll elements */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -87,7 +100,7 @@
     body.continuous-mode .slide {
       display: flex !important;
       opacity: 1 !important;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3rem;
       border-bottom: 2px dashed #DBEAFE;
       padding-bottom: 2.5rem;
     }
@@ -116,11 +129,11 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid #E0F2FE;
-      box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 16px -2px rgba(2, 132, 199, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
     }
     .glass-card-hover:hover {
       border-color: #38BDF8;
-      box-shadow: 0 10px 25px -4px rgba(2, 132, 199, 0.12), 0 4px 10px -1px rgba(2, 132, 199, 0.06);
+      box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.12), 0 2px 8px -1px rgba(2, 132, 199, 0.06);
       transform: translateY(-1.5px);
       transition: all 0.2s ease;
     }
@@ -153,36 +166,36 @@
     }
   </style>
 </head>
-<body class="h-full text-slate-800 selection:bg-sky-500 selection:text-white">
+<body class="min-h-screen text-slate-800 selection:bg-sky-500 selection:text-white">
 
-  <!-- Top Navigation & Control Header (Clean 50px Height) -->
-  <header class="h-[50px] bg-white/95 backdrop-blur-md border-b border-sky-100 px-4 sm:px-6 flex items-center justify-between no-print shadow-xs shrink-0 z-50">
+  <!-- Top Navigation & Control Header (Compact 48px Height) -->
+  <header class="h-12 bg-white/95 backdrop-blur-md border-b border-sky-100 px-4 flex items-center justify-between no-print shadow-xs shrink-0 z-50">
     <!-- Brand / Title -->
-    <div class="flex items-center space-x-3">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-xs">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-xs">
         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </div>
       <div>
-        <h1 class="text-sm sm:text-base font-extrabold text-blue-950 tracking-wide flex items-center gap-2">
+        <h1 class="text-xs sm:text-sm font-extrabold text-blue-950 tracking-tight flex items-center gap-1.5">
           <span>為愛鋪路・桃園捷運3房置產藍圖</span>
-          <span class="text-xs bg-sky-100 text-sky-800 border border-sky-200 px-2 py-0.5 rounded font-semibold hidden sm:inline-block">清新晴空版</span>
+          <span class="text-[10px] bg-sky-100 text-sky-800 border border-sky-200 px-1.5 py-0.2 rounded font-semibold hidden sm:inline-block">清新晴空版</span>
         </h1>
-        <p class="text-xs text-slate-500 hidden md:block leading-none mt-0.5">一位父親為18歲孩子規劃：安全獨立通勤、坡道平面車位、身心友善生活圈</p>
+        <p class="text-[10px] text-slate-500 hidden md:block leading-none mt-0.5">一位父親為18歲孩子規劃：安全獨立通勤、坡道平面車位、身心友善生活圈</p>
       </div>
     </div>
 
     <!-- Slide Navigation Controls -->
     <div class="flex items-center space-x-2">
       <!-- Mode Toggle -->
-      <button onclick="toggleMode()" id="modeToggleBtn" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition font-medium flex items-center gap-1.5" title="切換投影片與連續捲動模式">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <button onclick="toggleMode()" id="modeToggleBtn" class="text-xs px-2.5 py-1 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 transition font-medium flex items-center gap-1" title="切換投影片與連續捲動模式">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         <span id="modeText">連續模式</span>
       </button>
 
       <!-- Jump To Menu Dropdown -->
-      <select id="slideSelect" onchange="jumpToSlide(parseInt(this.value))" class="text-xs sm:text-sm bg-white text-slate-700 border border-sky-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-sky-500 max-w-[140px] sm:max-w-none font-medium">
+      <select id="slideSelect" onchange="jumpToSlide(parseInt(this.value))" class="text-xs bg-white text-slate-700 border border-sky-200 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500 max-w-[130px] sm:max-w-none font-medium">
         <option value="0">第 1 頁：封面與父親心聲</option>
         <option value="1">第 2 頁：桃園未來捷運全路網總覽</option>
         <option value="2">第 3 頁：機捷 A7 體育大學站 (醫療與空橋)</option>
@@ -199,12 +212,12 @@
 
       <!-- Prev / Next Buttons (for slide mode) -->
       <div id="slideButtons" class="flex items-center space-x-1">
-        <button onclick="prevSlide()" class="p-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition" title="上一頁 (鍵盤 ←)">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <button onclick="prevSlide()" class="p-1 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 transition" title="上一頁 (鍵盤 ←)">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <span id="slideCounter" class="text-xs sm:text-sm font-mono font-bold text-sky-800 px-1.5 min-w-[42px] text-center">01/12</span>
-        <button onclick="nextSlide()" class="p-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition" title="下一頁 (鍵盤 → 或 空白鍵)">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span id="slideCounter" class="text-xs font-mono font-bold text-sky-700 px-1 min-w-[38px] text-center">01/12</span>
+        <button onclick="nextSlide()" class="p-1 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 transition" title="下一頁 (鍵盤 → 或 空白鍵)">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -212,74 +225,71 @@
 
   <!-- Progress Bar (Slide Mode) -->
   <div class="w-full bg-sky-100 h-1 no-print shrink-0">
-    <div id="progressBar" class="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 h-1 transition-all duration-300 shadow-xs" style="width: 8.33%;"></div>
+    <div id="progressBar" class="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 h-1 transition-all duration-300" style="width: 8.33%;"></div>
   </div>
 
-  <!-- Main Presentation Container (Expansive Fullscreen Viewport) -->
-  <main class="w-full px-4 sm:px-8 py-3">
+  <!-- Main Presentation Container (Expansive Viewport, Zero Page Scrollbar) -->
+  <main class="w-full max-w-[1600px] mx-auto px-3 sm:px-8 py-2.5">
 
     <!-- ========================================== -->
-    <!-- SLIDE 1: 封面 (COVER) - 滿版大字氣派展示   -->
+    <!-- SLIDE 1: 封面 (COVER) - 無捲軸整頁自適應   -->
     <!-- ========================================== -->
     <section id="slide-0" class="slide active">
-      <div class="relative w-full h-full rounded-2xl overflow-hidden glass-card-light border border-sky-200 shadow-sm p-6 sm:p-10 flex flex-col justify-between items-center text-center">
+      <div class="relative w-full h-full rounded-2xl overflow-hidden glass-card-light border border-sky-200 shadow-sm p-4 sm:p-6 lg:p-8 text-center flex flex-col justify-center items-center">
         <!-- Ambient fresh gradient circles -->
-        <div class="absolute -top-32 -left-32 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-24 -left-24 w-72 h-72 bg-sky-200/40 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-72 h-72 bg-blue-100/50 rounded-full blur-2xl pointer-events-none"></div>
 
-        <!-- Top Tag -->
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 border border-sky-300 text-sky-900 text-xs sm:text-sm font-bold shadow-xs">
-          <span class="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse"></span>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100/80 border border-sky-300/80 text-sky-900 text-xs font-semibold mb-3 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
           寫在孩子18歲成年之際・一封長遠守護的置產計畫書
         </div>
 
-        <!-- Center Main Titles -->
-        <div class="my-auto max-w-4xl">
-          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-blue-950 leading-tight">
-            捷運是他走向世界的雙腳
-          </h1>
-          <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 mt-3 mb-6">
-            為18歲孩子打造的桃園捷運3房安居與獨立通勤全指南
-          </p>
+        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-blue-950 leading-tight">
+          捷運是他走向世界的雙腳
+        </h1>
+        <p class="text-base sm:text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 mt-1.5 mb-3.5">
+          為18歲孩子打造的桃園捷運3房安居與獨立通勤全指南
+        </p>
 
-          <!-- Monologue Box with Larger Legible Font -->
-          <div class="w-full text-left bg-gradient-to-b from-white/95 to-sky-50/80 border border-sky-200 rounded-xl p-5 sm:p-6 text-slate-700 space-y-3 shadow-xs leading-relaxed text-sm sm:text-base">
-            <div class="flex items-center gap-2.5 border-b border-sky-100 pb-2.5">
-              <span class="text-xl">👨‍👦</span>
-              <div>
-                <h2 class="font-extrabold text-blue-950 text-sm sm:text-base">一位父親的初衷與盤算：</h2>
-                <p class="text-xs text-sky-700 font-semibold">當孩子無法考取汽機車駕照，軌道就是他一生獨立尊嚴的基石</p>
-              </div>
+        <!-- Father's Heartfelt Monologue Box (Compact & Elegant) -->
+        <div class="max-w-3xl w-full text-left bg-gradient-to-b from-white to-sky-50/70 border border-sky-200/80 rounded-xl p-3.5 sm:p-5 text-slate-700 space-y-2.5 shadow-xs leading-relaxed text-xs sm:text-sm">
+          <div class="flex items-center gap-2 border-b border-sky-100 pb-2">
+            <span class="text-lg">👨‍👦</span>
+            <div>
+              <h2 class="font-bold text-blue-950 text-xs sm:text-sm">一位父親的初衷與盤算：</h2>
+              <p class="text-[11px] text-sky-700 font-medium">當孩子無法考取汽機車駕照，軌道就是他一生獨立尊嚴的基石</p>
             </div>
-            <p class="text-slate-600">
-              「孩子今年滿18歲了。在台灣這樣車流混亂、機車穿梭的交通環境中，孩子面對突發狀況的反應延遲，使他注定無法像一般青年考取機車或汽車駕照。然而，我不希望他因此一輩子受困在家中，或是永遠只能依賴年邁父母接送。」
-            </p>
-            <p class="text-slate-600">
-              「桃園是未來軌道建設最密集的新興城市。捷運有著<strong>固定的班次、封閉安全的專屬路權、直觀的進出閘門與平整的人行道</strong>——這對極度需要規律與可預測性（Predictability）的孩子來說，是全世界最友善的交通工具。」
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs sm:text-sm">
-              <div class="p-3 bg-white rounded-lg border border-sky-200 shadow-xs">
-                <span class="font-bold text-blue-700 block mb-1">🏡 堅持「3房」格局</span>
-                父母主臥、孩子獨立安撫感官臥室、未來照護/多功能支持房，長久穩定不換屋。
-              </div>
-              <div class="p-3 bg-white rounded-lg border border-sky-200 shadow-xs">
-                <span class="font-bold text-sky-700 block mb-1">🚗 堅持「坡道平面」</span>
-                堅決摒棄機械車位故障、等待、狹隘恐懼與安全隱患，父母長輩接送無負擔。
-              </div>
-              <div class="p-3 bg-white rounded-lg border border-sky-200 shadow-xs">
-                <span class="font-bold text-indigo-700 block mb-1">🚶 堅持「出站安全步道」</span>
-                距站500-800米內、實體人行道、低視覺與噪音過載，讓通勤成為享受而非壓力。
-              </div>
+          </div>
+          <p class="text-slate-600 leading-normal">
+            「孩子今年滿18歲了。在台灣這樣車流混亂、機車穿梭的交通環境中，孩子面對突發狀況的反應延遲，使他注定無法像一般青年考取機車或汽車駕照。然而，我不希望他因此一輩子受困在家中，或是永遠只能依賴年邁父母接送。」
+          </p>
+          <p class="text-slate-600 leading-normal">
+            「桃園是未來軌道建設最密集的新興城市。捷運有著<strong>固定的班次、封閉安全的專屬路權、直觀的進出閘門與平整的人行道</strong>——這對極度需要規律與可預測性（Predictability）的孩子來說，是全世界最友善的交通工具。」
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+            <div class="p-2.5 bg-white rounded-lg border border-sky-200 shadow-xs">
+              <span class="font-bold text-blue-600 block mb-0.5">🏡 堅持「3房」格局</span>
+              父母主臥、孩子獨立安撫感官臥室、未來照護/多功能支持房，長久穩定不換屋。
+            </div>
+            <div class="p-2.5 bg-white rounded-lg border border-sky-200 shadow-xs">
+              <span class="font-bold text-sky-600 block mb-0.5">🚗 堅持「坡道平面」</span>
+              堅決摒棄機械車位故障、等待、狹隘恐懼與安全隱患，父母長輩接送無負擔。
+            </div>
+            <div class="p-2.5 bg-white rounded-lg border border-sky-200 shadow-xs">
+              <span class="font-bold text-indigo-600 block mb-0.5">🚶 堅持「出站安全步道」</span>
+              距站500-800米內、實體人行道、低視覺與噪音過載，讓通勤成為享受而非壓力。
             </div>
           </div>
         </div>
 
-        <!-- Action Button -->
-        <div class="flex items-center justify-center gap-4 text-sm sm:text-base">
-          <button onclick="nextSlide()" class="px-8 py-3 rounded-xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-extrabold shadow-md shadow-sky-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+        <!-- Action hints -->
+        <div class="mt-3.5 flex flex-wrap items-center justify-center gap-3 text-xs">
+          <button onclick="nextSlide()" class="px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold shadow-md shadow-sky-500/20 transition transform hover:-translate-y-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
             <span>翻開第二頁：桃園未來捷運全站點地圖</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </button>
+          <span class="text-slate-400 hidden sm:inline text-xs">（可按鍵盤方向鍵 ← / → 翻頁）</span>
         </div>
       </div>
     </section>
@@ -288,123 +298,132 @@
     <!-- SLIDE 2: 桃園未來捷運全站點總覽            -->
     <!-- ========================================== -->
     <section id="slide-1" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <!-- Header -->
-        <div class="flex items-center justify-between border-b border-sky-200 pb-2 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <!-- Slide Header -->
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
           <div>
-            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase">Slide 02・全域交通規劃藍圖</div>
-            <h2 class="text-xl sm:text-2xl font-black text-blue-950">未來桃園捷運路網全覽：全線站點與進度清單</h2>
+            <div class="text-[10px] font-bold text-sky-600 tracking-tight uppercase">Slide 02・全域交通規劃藍圖</div>
+            <h2 class="text-lg sm:text-xl font-black text-blue-950 leading-tight">未來桃園捷運路網全覽：全線站點與進度清單</h2>
           </div>
-          <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
-            <span class="px-2.5 py-1 rounded badge-subway-purple font-semibold">機捷 (營運中/A23地下化)</span>
-            <span class="px-2.5 py-1 rounded badge-subway-green font-semibold">綠線 (2026北段試營運)</span>
-            <span class="px-2.5 py-1 rounded badge-subway-brown font-semibold">棕線 (行政院核定)</span>
-            <span class="px-2.5 py-1 rounded badge-subway-orange font-semibold">三鶯線延伸 (核定)</span>
+          <div class="flex flex-wrap gap-1.5 text-[11px]">
+            <span class="px-2 py-0.5 rounded badge-subway-purple font-medium">機捷 (營運中/A23地下化)</span>
+            <span class="px-2 py-0.5 rounded badge-subway-green font-medium">綠線 (2026北段試營運)</span>
+            <span class="px-2 py-0.5 rounded badge-subway-brown font-medium">棕線 (行政院核定)</span>
+            <span class="px-2 py-0.5 rounded badge-subway-orange font-medium">三鶯線延伸 (核定)</span>
           </div>
         </div>
 
-        <!-- SVG Map (Scales & Fills Center Space) -->
-        <div class="w-full flex-1 min-h-0 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2.5 border border-sky-200 flex items-center justify-center overflow-hidden">
-          <svg viewBox="0 0 1000 350" class="w-full h-full max-h-[300px] select-none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="lightGridExp" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(14, 165, 233, 0.08)" stroke-width="1"/>
-              </pattern>
-            </defs>
-            <rect width="1000" height="350" fill="url(#lightGridExp)" />
+        <!-- Interactive SVG Schematic Map of Taoyuan Metro Network (Scaled Compact) -->
+        <div class="glass-card-light rounded-xl p-2 sm:p-2.5 border border-sky-200 shadow-xs shrink-0">
+          <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden">
+            <svg viewBox="0 0 1000 350" class="w-full h-auto max-h-[220px] select-none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="lightGrid2" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(14, 165, 233, 0.08)" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="1000" height="350" fill="url(#lightGrid2)" />
 
-            <!-- Lines -->
-            <path d="M 50 110 L 220 110 L 400 110 L 580 110 L 720 140 L 820 180 L 920 220" fill="none" stroke="#7C3AED" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
-            <text x="60" y="92" fill="#6D28D9" font-size="13" font-weight="bold">機場捷運 (A1台北 ~ A23中壢)</text>
+              <!-- Line 1: 機場捷運 -->
+              <path d="M 50 110 L 220 110 L 400 110 L 580 110 L 720 140 L 820 180 L 920 220" fill="none" stroke="#7C3AED" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+              <text x="60" y="95" fill="#6D28D9" font-size="12" font-weight="bold">機場捷運 (A1台北 ~ A23中壢)</text>
 
-            <path d="M 850 310 L 750 310 L 660 280 L 590 230 L 590 160 L 590 110 L 560 70 L 480 60 L 400 110" fill="none" stroke="#059669" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
-            <text x="860" y="315" fill="#047857" font-size="13" font-weight="bold">捷運綠線 (G01八德 ~ G32坑口)</text>
+              <!-- Line 2: 綠線主線 -->
+              <path d="M 850 310 L 750 310 L 660 280 L 590 230 L 590 160 L 590 110 L 560 70 L 480 60 L 400 110" fill="none" stroke="#059669" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+              <text x="860" y="315" fill="#047857" font-size="12" font-weight="bold">捷運綠線 (G01八德 ~ G32坑口)</text>
 
-            <path d="M 590 230 L 710 210 L 820 180 L 940 150" fill="none" stroke="#B45309" stroke-width="6" stroke-dasharray="6 3" stroke-linecap="round"/>
-            <text x="840" y="165" fill="#92400E" font-size="12" font-weight="bold">捷運棕線 (BRH01桃園 ~ 迴龍)</text>
+              <!-- Line 3: 捷運棕線 -->
+              <path d="M 590 230 L 710 210 L 820 180 L 940 150" fill="none" stroke="#B45309" stroke-width="5" stroke-dasharray="6 3" stroke-linecap="round"/>
+              <text x="840" y="165" fill="#92400E" font-size="11" font-weight="bold">捷運棕線 (BRH01桃園 ~ 迴龍)</text>
 
-            <path d="M 660 280 L 780 270 L 920 270" fill="none" stroke="#EA580C" stroke-width="6" stroke-dasharray="6 3" stroke-linecap="round"/>
-            <text x="790" y="260" fill="#C2410C" font-size="12" font-weight="bold">三鶯線延伸 (LB14大湳 ~ 頂埔板南線)</text>
+              <!-- Line 4: 新北三鶯線延伸八德 -->
+              <path d="M 660 280 L 780 270 L 920 270" fill="none" stroke="#EA580C" stroke-width="5" stroke-dasharray="6 3" stroke-linecap="round"/>
+              <text x="790" y="260" fill="#C2410C" font-size="11" font-weight="bold">三鶯線延伸 (LB14大湳 ~ 頂埔板南線)</text>
 
-            <!-- Stations Nodes -->
-            <circle cx="920" cy="220" r="8" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
-            <text x="920" y="242" fill="#1E293B" font-size="11" font-weight="bold" text-anchor="middle">A7 體育大學</text>
+              <!-- Stations Nodes -->
+              <circle cx="920" cy="220" r="7" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="920" y="240" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">A7 體育大學</text>
 
-            <circle cx="820" cy="180" r="7" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
-            <text x="820" y="166" fill="#334155" font-size="10" font-weight="600" text-anchor="middle">A8 長庚醫院</text>
+              <circle cx="820" cy="180" r="6" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="820" y="168" fill="#334155" font-size="9" font-weight="600" text-anchor="middle">A8 長庚醫院</text>
 
-            <circle cx="580" cy="110" r="8" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
-            <text x="580" y="92" fill="#1E293B" font-size="11" font-weight="bold" text-anchor="middle">A10 山鼻站</text>
+              <circle cx="580" cy="110" r="7" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="580" y="95" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">A10 山鼻站</text>
 
-            <circle cx="400" cy="110" r="9" fill="#059669" stroke="#7C3AED" stroke-width="3"/>
-            <text x="400" y="132" fill="#047857" font-size="11" font-weight="bold" text-anchor="middle">A11/G32 坑口交會</text>
+              <circle cx="400" cy="110" r="8" fill="#059669" stroke="#7C3AED" stroke-width="3"/>
+              <text x="400" y="130" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">A11/G32 坑口交會</text>
 
-            <circle cx="220" cy="110" r="8" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
-            <text x="220" y="132" fill="#1E293B" font-size="11" font-weight="bold" text-anchor="middle">A18 高鐵桃園</text>
+              <circle cx="220" cy="110" r="7" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="220" y="130" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">A18 高鐵桃園</text>
 
-            <circle cx="120" cy="110" r="8" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
-            <text x="120" y="132" fill="#1E293B" font-size="11" font-weight="bold" text-anchor="middle">A19 體育園區</text>
+              <circle cx="120" cy="110" r="7" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="120" y="130" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">A19 體育園區</text>
 
-            <circle cx="590" cy="160" r="7" fill="#059669" stroke="#FFFFFF" stroke-width="2"/>
-            <text x="530" y="165" fill="#047857" font-size="11" font-weight="bold">G11 藝文特區</text>
+              <circle cx="590" cy="160" r="6" fill="#059669" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="535" y="165" fill="#047857" font-size="10" font-weight="bold">G11 藝文特區</text>
 
-            <circle cx="590" cy="195" r="7" fill="#059669" stroke="#FFFFFF" stroke-width="2"/>
-            <text x="510" y="200" fill="#047857" font-size="11" font-weight="bold">G09/G08 小檜溪</text>
+              <circle cx="590" cy="195" r="6" fill="#059669" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="515" y="200" fill="#047857" font-size="10" font-weight="bold">G09/G08 小檜溪</text>
 
-            <circle cx="590" cy="230" r="10" fill="#B45309" stroke="#059669" stroke-width="3.5"/>
-            <text x="465" y="235" fill="#92400E" font-size="12" font-weight="bold">G07 桃園車站(三鐵)</text>
+              <circle cx="590" cy="230" r="9" fill="#B45309" stroke="#059669" stroke-width="3"/>
+              <text x="475" y="235" fill="#92400E" font-size="11" font-weight="bold">G07 桃園車站(三鐵)</text>
 
-            <circle cx="660" cy="280" r="9" fill="#EA580C" stroke="#059669" stroke-width="3"/>
-            <text x="595" y="300" fill="#9A3412" font-size="11" font-weight="bold">G04 大湳站(交會)</text>
+              <circle cx="660" cy="280" r="8" fill="#EA580C" stroke="#059669" stroke-width="2.5"/>
+              <text x="600" y="300" fill="#9A3412" font-size="10" font-weight="bold">G04 大湳站(交會)</text>
 
-            <circle cx="850" cy="310" r="9" fill="#059669" stroke="#FFFFFF" stroke-width="3"/>
-            <text x="850" y="332" fill="#047857" font-size="11" font-weight="bold" text-anchor="middle">G01 八德站 (首站)</text>
-          </svg>
+              <circle cx="850" cy="310" r="8" fill="#059669" stroke="#FFFFFF" stroke-width="2.5"/>
+              <text x="850" y="330" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">G01 八德站 (首站)</text>
+            </svg>
+          </div>
         </div>
 
-        <!-- 3 Detailed Content Columns with Larger Font -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs sm:text-sm shrink-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200">
-            <span class="font-extrabold text-sm sm:text-base text-emerald-800 flex items-center gap-1.5 border-b border-emerald-100 pb-1 mb-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 綠線主線 (G01~G32，共21站)
+        <!-- 3 Columns for Lines (Compact Max Height) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs flex-1 min-h-0">
+          <div class="glass-card-light rounded-lg p-2.5 border border-emerald-200 flex flex-col justify-between">
+            <span class="font-bold text-xs text-emerald-800 flex items-center gap-1 border-b border-emerald-100 pb-1 mb-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 綠線主線 (G01~G32，共21站)
             </span>
-            <p class="text-slate-600 mb-1.5">貫穿八德、桃園舊市區、藝文特區與坑口，北段2026試營運。</p>
-            <div class="space-y-1 bg-emerald-50/70 p-2 rounded-lg border border-emerald-100">
-              <div class="flex justify-between font-bold text-emerald-900"><span>G01八德首站</span><span>起點必有位</span></div>
-              <div class="flex justify-between font-bold text-orange-900"><span>G04大湳雙捷站</span><span>交會三鶯線</span></div>
-              <div class="flex justify-between font-bold text-amber-900"><span>G07桃園大車站</span><span>三鐵共構核心</span></div>
+            <p class="text-[11px] text-slate-600 mb-1">貫穿八德、桃園舊市區、藝文特區與坑口，北段2026試營運。</p>
+            <div class="text-[11px] space-y-1 bg-emerald-50/50 p-1.5 rounded border border-emerald-100 flex-1 overflow-y-auto">
+              <div class="flex justify-between font-semibold text-emerald-900"><span>G01八德首站</span><span>起點必有位</span></div>
+              <div class="flex justify-between font-semibold text-orange-900"><span>G04大湳雙捷站</span><span>交會三鶯線</span></div>
+              <div class="flex justify-between font-semibold text-amber-900"><span>G07桃園大車站</span><span>三鐵共構中心</span></div>
+              <div class="flex justify-between text-slate-700"><span>G08景福宮/G09民光</span><span>小檜溪綠帶</span></div>
+              <div class="flex justify-between text-slate-700"><span>G10大興西/G11藝文</span><span>文教圖書館</span></div>
             </div>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-purple-200">
-            <span class="font-extrabold text-sm sm:text-base text-purple-900 flex items-center gap-1.5 border-b border-purple-100 pb-1 mb-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span> 機場捷運 (A1~A23全線)
+          <div class="glass-card-light rounded-lg p-2.5 border border-purple-200 flex flex-col justify-between">
+            <span class="font-bold text-xs text-purple-900 flex items-center gap-1 border-b border-purple-100 pb-1 mb-1">
+              <span class="w-2 h-2 rounded-full bg-purple-600"></span> 機場捷運 (A1~A23全線)
             </span>
-            <p class="text-slate-600 mb-1.5">全線營運成熟，A23中壢地下站推進中，直達北車與高鐵。</p>
-            <div class="space-y-1 bg-purple-50/70 p-2 rounded-lg border border-purple-100">
-              <div class="flex justify-between font-bold text-purple-900"><span>A7體育大學</span><span>空橋/就業園區</span></div>
-              <div class="flex justify-between font-bold text-sky-900"><span>A8長庚醫院</span><span>直達車/頂尖醫療</span></div>
-              <div class="flex justify-between font-bold text-blue-900"><span>A18/A19青埔</span><span>全台頂規人行道</span></div>
+            <p class="text-[11px] text-slate-600 mb-1">全線營運成熟，A23中壢地下站推進中，直達北車與高鐵。</p>
+            <div class="text-[11px] space-y-1 bg-purple-50/50 p-1.5 rounded border border-purple-100 flex-1 overflow-y-auto">
+              <div class="flex justify-between font-semibold text-purple-900"><span>A7體育大學</span><span>空橋/就業園區</span></div>
+              <div class="flex justify-between font-semibold text-sky-900"><span>A8長庚醫院</span><span>直達車/頂尖醫療</span></div>
+              <div class="flex justify-between text-slate-700"><span>A10山鼻站</span><span>低密度純住宅</span></div>
+              <div class="flex justify-between font-semibold text-blue-900"><span>A18/A19青埔</span><span>全台頂規人行道</span></div>
+              <div class="flex justify-between text-slate-700"><span>A23中壢車站</span><span>鐵路地下化共構</span></div>
             </div>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-amber-200">
-            <span class="font-extrabold text-sm sm:text-base text-amber-900 flex items-center gap-1.5 border-b border-amber-100 pb-1 mb-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 棕線 / 三鶯延伸 / 鐵路地下化
+          <div class="glass-card-light rounded-lg p-2.5 border border-amber-200 flex flex-col justify-between">
+            <span class="font-bold text-xs text-amber-900 flex items-center gap-1 border-b border-amber-100 pb-1 mb-1">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span> 棕線 / 三鶯延伸 / 鐵路地下化
             </span>
-            <p class="text-slate-600 mb-1.5">直通雙北新莊線與板南線，擴大特教與就業生活圈。</p>
-            <div class="space-y-1 bg-amber-50/70 p-2 rounded-lg border border-amber-100">
-              <div class="text-amber-900 font-bold"><strong>棕線(7站)：</strong>桃園車站 ➔ 龜山 ➔ 迴龍</div>
-              <div class="text-orange-900 font-bold"><strong>三鶯延伸：</strong>LB14大湳站直通頂埔板南線</div>
-              <div class="text-blue-900 font-bold"><strong>鐵路地下化：</strong>消除平交道、市容縫合</div>
+            <p class="text-[11px] text-slate-600 mb-1">直通雙北新莊線與板南線，擴大特教與就業生活圈。</p>
+            <div class="text-[11px] space-y-1 bg-amber-50/50 p-1.5 rounded border border-amber-100 flex-1 overflow-y-auto">
+              <div class="text-amber-900"><strong>棕線(7站)：</strong>桃園車站 ➔ 龜山 ➔ 迴龍(接新莊線)</div>
+              <div class="text-orange-900"><strong>三鶯延伸：</strong>LB14大湳站地下直通頂埔板南線</div>
+              <div class="text-blue-900"><strong>鐵路地下化：</strong>鳳鳴、桃園、中路、中原、中壢新站</div>
             </div>
           </div>
         </div>
 
         <!-- Bottom bar -->
-        <div class="p-2.5 rounded-xl bg-white border border-sky-200 text-xs sm:text-sm flex items-center justify-between shadow-xs shrink-0">
-          <span class="text-blue-950 font-bold">🎯 獨立通勤三大核心：① 實體寬敞人行道 ② 班距準時安定感 ③ 直達庇護工場與身心機構</span>
-          <button onclick="nextSlide()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition">
+        <div class="p-2 rounded-lg bg-white border border-sky-200 text-xs flex items-center justify-between shadow-xs shrink-0">
+          <span class="text-blue-950 font-bold text-[11px]">🎯 獨立通勤三大核心：① 實體寬敞人行道 ② 班距準時安定感 ③ 直達庇護工場與身心機構</span>
+          <button onclick="nextSlide()" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded text-xs transition">
             進入第三頁：各站周邊建案 ➔
           </button>
         </div>
@@ -415,97 +434,97 @@
     <!-- SLIDE 3: 機捷 A7 體育大學站 (龜山區)       -->
     <!-- ========================================== -->
     <section id="slide-2" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-purple">機場捷運 A7 站</span>
-              <span class="text-xs sm:text-sm text-slate-500">桃園市龜山區・文化一路 / 文青路</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-purple">機場捷運 A7 站</span>
+              <span class="text-xs text-slate-500">桃園市龜山區・文化一路 / 文青路</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">A7 體育大學站：長庚醫療後盾與空橋人車分流</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">A7 體育大學站：長庚醫療後盾與空橋人車分流</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=桃園機場捷運A7體育大學站" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=桃園機場捷運A7體育大學站" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <!-- Schematic SVG Layout Strip -->
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="360" y="40" width="180" height="35" rx="6" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
-            <text x="450" y="62" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">機捷 A7 體育大學站</text>
-            <line x1="0" y1="57" x2="900" y2="57" stroke="#8B5CF6" stroke-width="3" stroke-dasharray="8 4" opacity="0.4"/>
+        <!-- Schematic SVG Layout (Compact) -->
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 140" class="w-full h-auto max-h-[105px] select-none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="360" y="45" width="180" height="35" rx="6" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+            <text x="450" y="67" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">機捷 A7 體育大學站</text>
+            <line x1="0" y1="62" x2="900" y2="62" stroke="#8B5CF6" stroke-width="3" stroke-dasharray="8 4" opacity="0.4"/>
             <!-- Skybridge -->
-            <rect x="420" y="8" width="60" height="32" fill="rgba(56, 189, 248, 0.25)" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="4 2"/>
-            <text x="450" y="22" fill="#0369A1" font-size="9" font-weight="bold" text-anchor="middle">立體空橋系統</text>
+            <rect x="420" y="10" width="60" height="35" fill="rgba(56, 189, 248, 0.25)" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <text x="450" y="24" fill="#0369A1" font-size="9" font-weight="bold" text-anchor="middle">立體空橋人行步道</text>
 
             <!-- Buildings -->
             <g transform="translate(400, 85)">
-              <rect width="130" height="32" rx="5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">鴻築捷市達 (150m)</text>
-              <text x="65" y="27" fill="#6D28D9" font-size="8" text-anchor="middle">空橋直通・出站即到</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.5" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.05))"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">鴻築捷市達 (150m)</text>
+              <text x="65" y="25" fill="#6D28D9" font-size="8" text-anchor="middle">空橋直通・出站即到</text>
             </g>
             <g transform="translate(100, 85)">
-              <rect width="140" height="32" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">丹佛花都 (650m)</text>
-              <text x="70" y="27" fill="#0369A1" font-size="8" text-anchor="middle">樂善國小旁・親民總價</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.05))"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">丹佛花都 (650m)</text>
+              <text x="70" y="25" fill="#0369A1" font-size="8" text-anchor="middle">樂善國小旁・親民總價</text>
             </g>
             <g transform="translate(680, 85)">
-              <rect width="140" height="32" rx="5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">興富發鉑悦/富宇 (500m)</text>
-              <text x="70" y="27" fill="#B45309" font-size="8" text-anchor="middle">商業園區・公設齊全</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.05))"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">興富發鉑悦/富宇 (500m)</text>
+              <text x="70" y="25" fill="#B45309" font-size="8" text-anchor="middle">商業園區・公設齊全</text>
             </g>
           </svg>
         </div>
 
-        <!-- 3 Specific Projects Cards (Filling Remaining Vertical Space) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-purple-200 flex flex-col justify-between glass-card-hover">
+        <!-- 3 Specific Projects Detailed Cards (Compact Grid) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-purple-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 text-xs font-bold">空橋連通宅・首選</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,950 ~ 2,350 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">空橋連通宅・首選</span>
+                <span class="text-xs font-bold text-blue-900">1,950 ~ 2,350 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">鴻築捷市達</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-41坪)・單價46-52萬・坡道平面(~220萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">鴻築捷市達</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-41坪)・單價46-52萬・坡道平面(~220萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>空橋免過馬路直達站點，雨天不慌亂；坡道平車寬敞。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>總價偏高；臨路白天車流聲較大，需高品質氣密窗。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=龜山鴻築捷市達" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=龜山鴻築捷市達" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">校園公園純住</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,450 ~ 1,750 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">校園公園純住</span>
+                <span class="text-xs font-bold text-blue-900">1,450 ~ 1,750 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">丹佛花都</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(31-38坪)・單價38-42萬・坡道平面(~190萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">丹佛花都</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(31-38坪)・單價38-42萬・坡道平面(~190萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>總價省下近400萬減輕長遠壓力；文教區安靜單純。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>步行約8-9分鐘，需帶孩子實地建立固定人行道動線。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=龜山丹佛花都" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=龜山丹佛花都" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">指標地標園區</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,850 ~ 2,150 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">指標地標園區</span>
+                <span class="text-xs font-bold text-blue-900">1,850 ~ 2,150 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">興富發鉑悦 / 富宇系列</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(36-39坪)・單價45-49萬・坡道平面(~210萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">興富發鉑悦 / 富宇系列</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(36-39坪)・單價45-49萬・坡道平面(~210萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>步行約5-6分鐘，人行道寬闊；物業管理嚴謹、公設齊。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>商業區未來有零星工程車輛，需引導避開施工側。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=龜山興富發鉑悦" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=龜山興富發鉑悦" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -515,91 +534,91 @@
     <!-- SLIDE 4: 機捷 A10 山鼻站 (蘆竹區)         -->
     <!-- ========================================== -->
     <section id="slide-3" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-purple">機場捷運 A10 站</span>
-              <span class="text-xs sm:text-sm text-slate-500">桃園市蘆竹區・南山路三段 / 山鼻路</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-purple">機場捷運 A10 站</span>
+              <span class="text-xs text-slate-500">桃園市蘆竹區・南山路三段 / 山鼻路</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">A10 山鼻站：純住宅綠意、低感官刺激的捷運聚落</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">A10 山鼻站：純住宅綠意、低感官刺激的捷運聚落</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=機場捷運A10山鼻站" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=機場捷運A10山鼻站" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 130" class="w-full h-auto max-h-[95px] select-none" xmlns="http://www.w3.org/2000/svg">
             <rect x="100" y="45" width="160" height="35" rx="6" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
             <text x="180" y="67" fill="#FFFFFF" font-size="12" font-weight="bold" text-anchor="middle">機捷 A10 山鼻站</text>
             <line x1="260" y1="62" x2="880" y2="62" stroke="#94A3B8" stroke-width="10"/>
-            <text x="450" y="58" fill="#0F172A" font-size="10" font-weight="bold">重劃區專用人行步道林蔭路</text>
+            <text x="450" y="58" fill="#0F172A" font-size="9" font-weight="bold">重劃區專用人行步道林蔭路</text>
             <g transform="translate(380, 80)">
-              <rect width="130" height="32" rx="5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">新潤麗蒔 (250m)</text>
-              <text x="65" y="27" fill="#6D28D9" font-size="8" text-anchor="middle">步行3分・防霾配備</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">新潤麗蒔 (250m)</text>
+              <text x="65" y="25" fill="#6D28D9" font-size="8" text-anchor="middle">步行3分・防霾配備</text>
             </g>
             <g transform="translate(560, 80)">
-              <rect width="130" height="32" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">大華首捷 (350m)</text>
-              <text x="65" y="27" fill="#0369A1" font-size="8" text-anchor="middle">大花園・步行4分</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">大華首捷 (350m)</text>
+              <text x="65" y="25" fill="#0369A1" font-size="8" text-anchor="middle">大花園・步行4分</text>
             </g>
             <g transform="translate(730, 80)">
-              <rect width="140" height="32" rx="5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">佳陞豐川/寶佳 (400m)</text>
-              <text x="70" y="27" fill="#B45309" font-size="8" text-anchor="middle">高CP值親民總價</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">佳陞豐川/寶佳 (400m)</text>
+              <text x="70" y="25" fill="#B45309" font-size="8" text-anchor="middle">高CP值親民總價</text>
             </g>
           </svg>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">指標大基地</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,380 ~ 1,650 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">指標大基地</span>
+                <span class="text-xs font-bold text-blue-900">1,380 ~ 1,650 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">大華首捷</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(34-38坪)・單價35-38萬・坡道平面(~165萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">大華首捷</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(34-38坪)・單價35-38萬・坡道平面(~165萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>總價極具優勢，1500萬內買優質平車3房；中庭綠意大。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>大型採買需搭捷運1站至坑口或開車至南崁。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=蘆竹大華首捷" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=蘆竹大華首捷" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-purple-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-purple-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 text-xs font-bold">質感近站宅</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,550 ~ 1,780 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">質感近站宅</span>
+                <span class="text-xs font-bold text-blue-900">1,550 ~ 1,780 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">新潤麗蒔</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(33-36坪)・單價41-44萬・坡道平面(~180萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">新潤麗蒔</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(33-36坪)・單價41-44萬・坡道平面(~180萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>距站僅250米（3分鐘直達），防霾純住設計品質佳。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>社區以小坪數居多，3房戶別相對釋出稀少。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=蘆竹新潤麗蒔" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=蘆竹新潤麗蒔" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">親民高CP款</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,300 ~ 1,550 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">親民高CP款</span>
+                <span class="text-xs font-bold text-blue-900">1,300 ~ 1,550 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">佳陞豐川 / 寶佳峰匯</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(33-37坪)・單價34-37萬・坡道平面(~160萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">佳陞豐川 / 寶佳峰匯</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(33-37坪)・單價34-37萬・坡道平面(~160萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>購屋總價低，資金可留作孩子安養信託或職訓預備金。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>公設建材平實；冬天東北季風迎風面需確認窗密閉性。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=蘆竹佳陞豐川" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=蘆竹佳陞豐川" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -609,28 +628,28 @@
     <!-- SLIDE 5: 機捷 A18 / A19 青埔特區           -->
     <!-- ========================================== -->
     <section id="slide-4" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-purple">機場捷運 A18 / A19 站</span>
-              <span class="text-xs sm:text-sm text-slate-500">桃園市中壢區・青埔高鐵特區</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-purple">機場捷運 A18 / A19 站</span>
+              <span class="text-xs text-slate-500">桃園市中壢區・青埔高鐵特區</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">A18 / A19 青埔特區：全台最頂規無障礙與人車分流示範區</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">A18 / A19 青埔特區：全台最頂規無障礙與人車分流示範區</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=青埔A19桃園體育園區站" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=青埔A19桃園體育園區站" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 130" class="w-full h-auto max-h-[95px] select-none" xmlns="http://www.w3.org/2000/svg">
             <rect x="120" y="45" width="180" height="35" rx="6" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
             <text x="210" y="67" fill="#FFFFFF" font-size="12" font-weight="bold" text-anchor="middle">A19 體育園區站(商場共構)</text>
             <g transform="translate(130, 85)">
-              <rect width="160" height="30" rx="5" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
-              <text x="80" y="16" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">冠德青璞匯 (0m 共構)</text>
-              <text x="80" y="26" fill="#1E293B" font-size="8" text-anchor="middle">電梯直達・零車流風險</text>
+              <rect width="160" height="28" rx="4" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
+              <text x="80" y="15" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">冠德青璞匯 (0m 共構)</text>
+              <text x="80" y="24" fill="#1E293B" font-size="8" text-anchor="middle">電梯直達・零車流風險</text>
             </g>
             <g transform="translate(360, 30)">
               <rect width="180" height="40" rx="6" fill="rgba(16, 185, 129, 0.2)" stroke="#059669" stroke-width="1.5"/>
@@ -638,65 +657,65 @@
               <text x="450" y="63" fill="#065F46" font-size="8" text-anchor="middle">大片草皮與水岸・情緒安定聖地</text>
             </g>
             <g transform="translate(640, 30)">
-              <rect width="140" height="30" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">誠佳品學 (600m)</text>
-              <text x="70" y="26" fill="#0369A1" font-size="8" text-anchor="middle">青埔國中旁・2000萬內</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">誠佳品學 (600m)</text>
+              <text x="70" y="25" fill="#0369A1" font-size="8" text-anchor="middle">青埔國中旁・2000萬內</text>
             </g>
             <g transform="translate(640, 75)">
-              <rect width="140" height="30" rx="5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">樺龍青詠/新潤 (700m)</text>
-              <text x="70" y="26" fill="#B45309" font-size="8" text-anchor="middle">純住綠軸・質感第一</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">樺龍青詠/新潤 (700m)</text>
+              <text x="70" y="25" fill="#B45309" font-size="8" text-anchor="middle">純住綠軸・質感第一</text>
             </g>
           </svg>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200 flex flex-col justify-between glass-card-hover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-emerald-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">捷運正聯開宅</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,300 ~ 2,900 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">捷運正聯開宅</span>
+                <span class="text-xs font-bold text-blue-900">2,300 ~ 2,900 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">冠德青璞匯</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(38-44坪)・單價52-62萬・坡道平面(~220萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">冠德青璞匯</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(38-44坪)・單價52-62萬・坡道平面(~220萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong><strong>零風險首選！</strong>出電梯即閘門，不淋雨不跨車道。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>總價高；球賽或活動日時商場周邊人聲較嘈雜。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=中壢冠德青璞匯" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=中壢冠德青璞匯" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">文教高CP款</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,750 ~ 1,980 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">文教高CP款</span>
+                <span class="text-xs font-bold text-blue-900">1,750 ~ 1,980 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">誠佳品學</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(36-37坪)・單價44-48萬・坡道平面(~185萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">誠佳品學</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(36-37坪)・單價44-48萬・坡道平面(~185萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>青埔難得2,000萬內3房平車；實體人行道極其寬闊。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>步程約7-8分，需過兩個路口，需建立看號誌等待常規。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=中壢誠佳品學" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=中壢誠佳品學" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">高品質綠園道</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,100 ~ 2,450 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">高品質綠園道</span>
+                <span class="text-xs font-bold text-blue-900">2,100 ~ 2,450 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">樺龍青詠 / 新潤君頤</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-41坪)・單價51-55萬・坡道平面(~210萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">樺龍青詠 / 新潤君頤</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-41坪)・單價51-55萬・坡道平面(~210萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>建商品質口碑好，近青塘園綠軸，舒緩心情絕佳。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>總價逾2100萬；介於兩站間需固定引導單一路線。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=中壢樺龍青詠" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=中壢樺龍青詠" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -706,91 +725,91 @@
     <!-- SLIDE 6: 捷運綠線 G01 八德站 (八德擴大)    -->
     <!-- ========================================== -->
     <section id="slide-5" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-green">綠線 G01 站</span>
-              <span class="text-xs sm:text-sm text-slate-500">八德區・建德路 / 興豐路口 (八德擴大重劃區)</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-green">綠線 G01 站</span>
+              <span class="text-xs text-slate-500">八德區・建德路 / 興豐路口 (八德擴大重劃區)</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">G01 八德站：起點站好入座、高性價比的生活綠洲</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">G01 八德站：起點站好入座、高性價比的生活綠洲</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=八德捷運G01站" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=八德捷運G01站" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 130" class="w-full h-auto max-h-[95px] select-none" xmlns="http://www.w3.org/2000/svg">
             <rect x="120" y="45" width="160" height="35" rx="6" fill="#059669" stroke="#FFFFFF" stroke-width="2"/>
             <text x="200" y="67" fill="#FFFFFF" font-size="12" font-weight="bold" text-anchor="middle">綠線 G01 八德首站</text>
             <line x1="280" y1="62" x2="880" y2="62" stroke="#94A3B8" stroke-width="12"/>
-            <text x="500" y="58" fill="#0F172A" font-size="10" font-weight="bold">50米建德路中央寬林蔭步道</text>
+            <text x="500" y="58" fill="#0F172A" font-size="9" font-weight="bold">50米建德路中央寬林蔭步道</text>
             <g transform="translate(520, 80)">
-              <rect width="130" height="32" rx="5" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">益騏福爾摩沙 (600m)</text>
-              <text x="65" y="27" fill="#047857" font-size="8" text-anchor="middle">公園旁・成熟指標社區</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">益騏福爾摩沙 (600m)</text>
+              <text x="65" y="25" fill="#047857" font-size="8" text-anchor="middle">公園旁・成熟指標社區</text>
             </g>
             <g transform="translate(680, 80)">
-              <rect width="130" height="32" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">福鄉一邸 (750m)</text>
-              <text x="65" y="27" fill="#0369A1" font-size="8" text-anchor="middle">精工純住・隔音扎實</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">福鄉一邸 (750m)</text>
+              <text x="65" y="25" fill="#0369A1" font-size="8" text-anchor="middle">精工純住・隔音扎實</text>
             </g>
             <g transform="translate(520, 15)">
-              <rect width="130" height="32" rx="5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">合雄首席 (500m)</text>
-              <text x="65" y="27" fill="#B45309" font-size="8" text-anchor="middle">興豐商圈・採買便利</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">合雄首席 (500m)</text>
+              <text x="65" y="25" fill="#B45309" font-size="8" text-anchor="middle">興豐商圈・採買便利</text>
             </g>
           </svg>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200 flex flex-col justify-between glass-card-hover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-emerald-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">八擴成熟指標</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,500 ~ 1,780 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">八擴成熟指標</span>
+                <span class="text-xs font-bold text-blue-900">1,500 ~ 1,780 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">益騏福爾摩沙</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-42坪)・單價38-42萬・坡道平面(~170萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">益騏福爾摩沙</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-42坪)・單價38-42萬・坡道平面(~170萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>首站發車必定有座位，免去擁擠碰觸焦慮；近公園。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>綠線南段預計2028-2030陸續完工，前期有公車過渡期。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=八德益騏福爾摩沙" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=八德益騏福爾摩沙" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">精工成屋指標</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,650 ~ 1,900 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">精工成屋指標</span>
+                <span class="text-xs font-bold text-blue-900">1,650 ~ 1,900 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">福鄉一邸</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(34-38坪)・單價41-45萬・坡道平面(~185萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">福鄉一邸</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(34-38坪)・單價41-45萬・坡道平面(~185萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>在地優質建商品質佳，物業管理嚴謹，住戶單純包容。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>步程約9-10分稍長，夏天需注意遮陽與防曬裝備。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=八德福鄉一邸" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=八德福鄉一邸" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">商圈機能優選</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,550 ~ 1,820 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">商圈機能優選</span>
+                <span class="text-xs font-bold text-blue-900">1,550 ~ 1,820 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">合雄首席</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(36-40坪)・單價39-43萬・坡道平面(~180萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">合雄首席</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(36-40坪)・單價39-43萬・坡道平面(~180萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>步行3分進興豐商圈，適合訓練孩子自主買早餐便當。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>商圈周邊機車較多，需教導孩子固定走建德路人行道。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=八德合雄首席" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=八德合雄首席" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -800,23 +819,23 @@
     <!-- SLIDE 7: 捷運綠線 G04 大湳站 (雙捷共構)    -->
     <!-- ========================================== -->
     <section id="slide-6" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-green">綠線 G04</span>
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-orange">三鶯線延伸 LB14</span>
-              <span class="text-xs sm:text-sm text-slate-500">八德區・介壽路二段 / 銀和街口</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-green">綠線 G04</span>
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-orange">三鶯線延伸 LB14</span>
+              <span class="text-xs text-slate-500">八德區・介壽路二段 / 銀和街口</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">G04 大湳站：地下雙捷共構、直通雙北板南線特教網絡</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">G04 大湳站：地下雙捷共構、直通雙北板南線特教網絡</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=八德捷運G04大湳站" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=八德捷運G04大湳站" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 130" class="w-full h-auto max-h-[95px] select-none" xmlns="http://www.w3.org/2000/svg">
             <rect x="180" y="45" width="200" height="35" rx="6" fill="#FFFFFF" stroke="#EA580C" stroke-width="2.5"/>
             <text x="280" y="62" fill="#1E293B" font-size="12" font-weight="bold" text-anchor="middle">G04 / LB14 大湳雙捷地下站</text>
             <text x="280" y="73" fill="#EA580C" font-size="8" font-weight="bold" text-anchor="middle">綠線 + 三鶯線直通板南線</text>
@@ -826,60 +845,60 @@
             <text x="540" y="70" fill="#065F46" font-size="8" text-anchor="middle">純淨無車輛散步步道・舒緩情緒極佳</text>
 
             <g transform="translate(680, 45)">
-              <rect width="130" height="30" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">桃大誠 (700m)</text>
-              <text x="65" y="26" fill="#0369A1" font-size="8" text-anchor="middle">公園首排・旗艦社區</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">桃大誠 (700m)</text>
+              <text x="65" y="25" fill="#0369A1" font-size="8" text-anchor="middle">公園首排・旗艦社區</text>
             </g>
           </svg>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">八德旗艦指標</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,900 ~ 2,250 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">八德旗艦指標</span>
+                <span class="text-xs font-bold text-blue-900">1,900 ~ 2,250 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">桃大誠</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(39-43坪)・單價43-48萬・坡道平面(~195萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">桃大誠</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(39-43坪)・單價43-48萬・坡道平面(~195萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>物業口碑第一，守衛主動友善；緊鄰森林公園極舒緩。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>總價逾2000萬；至站點需固定走公園路林蔭步道。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=八德桃大誠" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=八德桃大誠" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-emerald-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">商圈核心新案</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,850 ~ 2,200 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">商圈核心新案</span>
+                <span class="text-xs font-bold text-blue-900">1,850 ~ 2,200 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">福鄉心匯 / 周邊新案</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-41坪)・單價44-49萬・坡道平面(~190萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">福鄉心匯 / 周邊新案</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-41坪)・單價44-49萬・坡道平面(~190萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>離G04雙捷站僅500m(6分)；採買生活成熟照顧便利。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>介壽路車流繁忙，需待捷運路面復原人行道方最佳化。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=八德大湳福鄉心匯" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=八德大湳福鄉心匯" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">國泰商圈純熟</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,700 ~ 2,050 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">國泰商圈純熟</span>
+                <span class="text-xs font-bold text-blue-900">1,700 ~ 2,050 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">廣豐置地廣場周邊成屋</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(38-43坪)・單價40-44萬・坡道平面(~180萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">廣豐置地廣場周邊成屋</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(38-43坪)・單價40-44萬・坡道平面(~180萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>現成屋齡6-10年，公設比低室內實坪大；近商場採買安全。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>需檢視管委會修繕狀況，自備款一次性需求較高。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=八德置地生活廣場" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=八德置地生活廣場" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -889,91 +908,91 @@
     <!-- SLIDE 8: 捷運綠線 G07 桃園車站 (三鐵樞紐)  -->
     <!-- ========================================== -->
     <section id="slide-7" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-green">綠線 G07</span>
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-brown">棕線</span>
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-blue">台鐵新站</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-green">綠線 G07</span>
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-brown">棕線</span>
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-blue">台鐵新站</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">G07 桃園車站：三鐵超級樞紐、特教與身障就業資源核心</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">G07 桃園車站：三鐵超級樞紐、特教與身障就業資源核心</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=桃園火車站地下化新站" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=桃園火車站地下化新站" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 130" class="w-full h-auto max-h-[95px] select-none" xmlns="http://www.w3.org/2000/svg">
             <rect x="350" y="45" width="200" height="38" rx="6" fill="#FFFFFF" stroke="#B45309" stroke-width="2.5"/>
             <text x="450" y="64" fill="#1E293B" font-size="13" font-weight="bold" text-anchor="middle">G07 桃園大車站 (三鐵共構)</text>
             <text x="450" y="75" fill="#B45309" font-size="8" font-weight="bold" text-anchor="middle">台鐵地下新站 ╳ 綠線 ╳ 棕線</text>
 
             <g transform="translate(180, 85)">
-              <rect width="130" height="30" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">德友極 (400m)</text>
-              <text x="65" y="26" fill="#0369A1" font-size="8" text-anchor="middle">耐震標章・步程5分</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">德友極 (400m)</text>
+              <text x="65" y="25" fill="#0369A1" font-size="8" text-anchor="middle">耐震標章・步程5分</text>
             </g>
             <g transform="translate(580, 85)">
-              <rect width="130" height="30" rx="5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-              <text x="65" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">亞昕向陽 (650m)</text>
-              <text x="65" y="26" fill="#B45309" font-size="8" text-anchor="middle">民族公園旁・綠意純住</text>
+              <rect width="130" height="30" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="65" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">亞昕向陽 (650m)</text>
+              <text x="65" y="25" fill="#B45309" font-size="8" text-anchor="middle">民族公園旁・綠意純住</text>
             </g>
             <g transform="translate(380, 10)">
-              <rect width="140" height="25" rx="5" fill="#FFFFFF" stroke="#DB2777" stroke-width="1.5"/>
+              <rect width="140" height="25" rx="4" fill="#FFFFFF" stroke="#DB2777" stroke-width="1.5"/>
               <text x="70" y="16" fill="#BE185D" font-size="9" font-weight="bold" text-anchor="middle">🏢 身障職業重建窗口與庇護工場</text>
             </g>
           </svg>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">站前耐震指標</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,100 ~ 2,500 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">站前耐震指標</span>
+                <span class="text-xs font-bold text-blue-900">2,100 ~ 2,500 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">德友極</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-40坪)・單價51-57萬・坡道平面(~220萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">德友極</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-40坪)・單價51-57萬・坡道平面(~220萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>步行5分進大站，日本第三方監造耐震宅，避開站前正噪音。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>單價較高；周邊屬舊市區，需訓練孩子習慣舊騎樓動線。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=桃園區德友極" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=桃園區德友極" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">公園首排純住</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,050 ~ 2,380 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">公園首排純住</span>
+                <span class="text-xs font-bold text-blue-900">2,050 ~ 2,380 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">亞昕向陽</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-41坪)・單價49-54萬・坡道平面(~210萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">亞昕向陽</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-41坪)・單價49-54萬・坡道平面(~210萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>正對民族公園視野好，平衡繁華機能與公園舒緩。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>前往車站需穿過三民路口，需加強辨識左轉車常規。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=桃園區亞昕向陽" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=桃園區亞昕向陽" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">交通動線便捷</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">1,850 ~ 2,200 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">交通動線便捷</span>
+                <span class="text-xs font-bold text-blue-900">1,850 ~ 2,200 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">三本大捷 / 春日路周邊</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(35-39坪)・單價47-52萬・坡道平面(~200萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">三本大捷 / 春日路周邊</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(35-39坪)・單價47-52萬・坡道平面(~200萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>往南進車站、往北通小檜溪，兩站可步巡選擇多。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>春日路大車較多，需教導孩子行走內側靜巷至站。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=桃園區三本大捷" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=桃園區三本大捷" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -983,91 +1002,91 @@
     <!-- SLIDE 9: 捷運綠線 G08 / G09 小檜溪重劃區   -->
     <!-- ========================================== -->
     <section id="slide-8" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-bold badge-subway-green">綠線 G08 / G09 站</span>
-              <span class="text-xs sm:text-sm text-slate-500">桃園區・小檜溪重劃區 (青溪特區)</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.2 rounded text-[11px] font-bold badge-subway-green">綠線 G08 / G09 站</span>
+              <span class="text-xs text-slate-500">桃園區・小檜溪重劃區 (青溪特區)</span>
             </div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950">G08 / G09 小檜溪：水岸雙溪綠廊、高綠覆感官調適天堂</h2>
+            <h2 class="text-base sm:text-lg font-black text-blue-950">G08 / G09 小檜溪：水岸雙溪綠廊、高綠覆感官調適天堂</h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=桃園小檜溪重劃區" target="_blank" class="text-xs sm:text-sm px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center gap-1 shadow-xs">
-            <span>📍 Google Maps 實景導航</span> ↗
+          <a href="https://www.google.com/maps/search/?api=1&query=桃園小檜溪重劃區" target="_blank" class="text-xs px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-300 font-semibold flex items-center gap-1 shadow-xs">
+            <span>📍 Google Maps</span> ↗
           </a>
         </div>
 
-        <div class="w-full h-24 sm:h-28 bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-2 border border-sky-200 overflow-hidden shrink-0 flex items-center">
-          <svg viewBox="0 0 900 130" class="w-full h-full select-none" xmlns="http://www.w3.org/2000/svg">
+        <div class="w-full bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-2 border border-sky-200 overflow-hidden shrink-0">
+          <svg viewBox="0 0 900 130" class="w-full h-auto max-h-[95px] select-none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="120" cy="65" r="9" fill="#059669" stroke="#FFFFFF" stroke-width="2.5"/>
             <text x="140" y="70" fill="#047857" font-size="11" font-weight="bold">綠線 G09 民光站</text>
             <path d="M 300 25 Q 550 50 850 30" fill="none" stroke="#0284C7" stroke-width="6" opacity="0.6"/>
             <text x="560" y="38" fill="#0369A1" font-size="10" font-weight="bold">南崁溪親水綠帶自行車步道</text>
             <g transform="translate(360, 75)">
-              <rect width="140" height="30" rx="5" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">遠雄新綠洲/三本 (650m)</text>
-              <text x="70" y="26" fill="#047857" font-size="8" text-anchor="middle">距G09步行7-8分</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">遠雄新綠洲/三本 (650m)</text>
+              <text x="70" y="25" fill="#047857" font-size="8" text-anchor="middle">距G09步行7-8分</text>
             </g>
             <g transform="translate(530, 75)">
-              <rect width="140" height="30" rx="5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">昭揚大河院 (850m)</text>
-              <text x="70" y="26" fill="#0369A1" font-size="8" text-anchor="middle">水岸景觀萬坪基地</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">昭揚大河院 (850m)</text>
+              <text x="70" y="25" fill="#0369A1" font-size="8" text-anchor="middle">水岸景觀萬坪基地</text>
             </g>
             <g transform="translate(700, 75)">
-              <rect width="140" height="30" rx="5" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
-              <text x="70" y="16" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">東騰青一/國泰 (750m)</text>
-              <text x="70" y="26" fill="#B45309" font-size="8" text-anchor="middle">日系精工沉靜純住</text>
+              <rect width="140" height="30" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+              <text x="70" y="15" fill="#1E293B" font-size="10" font-weight="bold" text-anchor="middle">東騰青一/國泰 (750m)</text>
+              <text x="70" y="25" fill="#B45309" font-size="8" text-anchor="middle">日系精工沉靜純住</text>
             </g>
           </svg>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200 flex flex-col justify-between glass-card-hover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 flex-1 min-h-0">
+          <div class="glass-card-light rounded-xl p-3 border border-emerald-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">小檜溪近捷優選</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,050 ~ 2,380 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">小檜溪近捷優選</span>
+                <span class="text-xs font-bold text-blue-900">2,050 ~ 2,380 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">遠雄新綠洲 / 三本四季</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(37-40坪)・單價49-54萬・坡道平面(~200萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">遠雄新綠洲 / 三本四季</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(37-40坪)・單價49-54萬・坡道平面(~200萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>離G09站相對最近(約7-8分)；建商品質維護完整。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>總價逾2000萬；民生路側車速快，需沿重劃區專用道走。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=桃園遠雄新綠洲" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=桃園遠雄新綠洲" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-bold">萬坪水岸大基地</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,250 ~ 2,680 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">萬坪水岸大基地</span>
+                <span class="text-xs font-bold text-blue-900">2,250 ~ 2,680 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">昭揚大河院</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(40-44坪)・單價51-56萬・坡道平面(~210萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">昭揚大河院</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(40-44坪)・單價51-56萬・坡道平面(~210萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>大基地造鎮水岸環境開闊，昭揚在地保值品牌強。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>步行至G09約需10-11分鐘，接近日常步行訓練上限。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=桃園昭揚大河院" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=桃園昭揚大河院" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200 flex flex-col justify-between glass-card-hover">
+          <div class="glass-card-light rounded-xl p-3 border border-blue-200 flex flex-col justify-between glass-card-hover">
             <div>
-              <div class="flex justify-between items-center mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">日系精工美學</span>
-                <span class="text-sm sm:text-base font-black text-blue-900">2,300 ~ 2,800 萬</span>
+              <div class="flex justify-between items-center mb-1">
+                <span class="px-2 py-0.2 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">日系精工美學</span>
+                <span class="text-xs font-bold text-blue-900">2,300 ~ 2,800 萬</span>
               </div>
-              <h3 class="text-base sm:text-lg font-black text-blue-950">東騰青一 / 國泰川青</h3>
-              <p class="text-xs text-slate-500 mb-2">3房(38-43坪)・單價54-60萬・坡道平面(~220萬)</p>
-              <div class="space-y-1.5 text-xs sm:text-sm bg-sky-50/70 p-2.5 rounded-lg border border-sky-100">
+              <h3 class="text-sm font-bold text-blue-950">東騰青一 / 國泰川青</h3>
+              <p class="text-[10px] text-slate-500 mb-2">3房(38-43坪)・單價54-60萬・坡道平面(~220萬)</p>
+              <div class="space-y-1 text-[11px] bg-sky-50/70 p-2 rounded-lg border border-sky-100">
                 <div class="text-emerald-800"><strong>👍 優點：</strong>東騰禪風水景木質美學，沉澱心靈，感官高敏孩子極適合。</div>
                 <div class="text-rose-800"><strong>⚠️ 缺點：</strong>單價位居小檜溪頂端，總價逼近2500萬需審慎財務槓桿。</div>
               </div>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=桃園東騰青一" target="_blank" class="text-xs sm:text-sm text-sky-700 hover:underline font-bold mt-1 text-right block">查看地圖 ↗</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=桃園東騰青一" target="_blank" class="text-[11px] text-sky-700 hover:underline font-semibold mt-1 block text-right">查看地圖 ↗</a>
           </div>
         </div>
       </div>
@@ -1077,165 +1096,165 @@
     <!-- SLIDE 10: 全案大數據橫向比較矩陣           -->
     <!-- ========================================== -->
     <section id="slide-9" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2">
-        <div class="flex items-center justify-between border-b border-sky-200 pb-1.5 shrink-0">
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between border-b border-sky-200 pb-1 shrink-0">
           <div>
-            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase">Slide 10・全數據橫向評比儀表板</div>
-            <h2 class="text-lg sm:text-2xl font-black text-blue-950 leading-tight">全案綜合橫向評比矩陣：價格、車位、步程與友善度</h2>
+            <div class="text-[10px] font-bold text-sky-600 tracking-tight uppercase">Slide 10・全數據橫向評比儀表板</div>
+            <h2 class="text-base sm:text-lg font-black text-blue-950 leading-tight">全案綜合橫向評比矩陣：價格、車位、步程與友善度</h2>
           </div>
-          <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
-            <button onclick="filterTable('all')" class="px-3 py-1 rounded-lg bg-blue-600 text-white font-bold shadow-xs">全部建案</button>
-            <button onclick="filterTable('under1700')" class="px-3 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-semibold">≤ 1,700 萬</button>
-            <button onclick="filterTable('under2000')" class="px-3 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-semibold">1,700~2,000 萬</button>
-            <button onclick="filterTable('high2000')" class="px-3 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-semibold">> 2,000 萬</button>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <button onclick="filterTable('all')" class="px-2.5 py-0.5 rounded bg-blue-600 text-white font-semibold shadow-xs">全部</button>
+            <button onclick="filterTable('under1700')" class="px-2 py-0.5 rounded bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-medium">≤ 1,700 萬</button>
+            <button onclick="filterTable('under2000')" class="px-2 py-0.5 rounded bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-medium">1,700~2,000 萬</button>
+            <button onclick="filterTable('high2000')" class="px-2 py-0.5 rounded bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-medium">> 2,000 萬</button>
           </div>
         </div>
 
         <!-- Master Table with internal scroll (Page itself has no scrollbar) -->
         <div class="glass-card-light rounded-xl border border-sky-200 overflow-hidden shadow-xs flex-1 min-h-0 flex flex-col">
           <div class="overflow-y-auto flex-1">
-            <table id="matrixTable" class="w-full text-left border-collapse text-xs sm:text-sm">
+            <table id="matrixTable" class="w-full text-left border-collapse text-[11px] sm:text-xs">
               <thead class="sticky top-0 z-10">
                 <tr class="bg-gradient-to-r from-sky-100 via-blue-50 to-indigo-50 text-blue-950 border-b border-sky-200 font-bold">
-                  <th class="p-2.5 whitespace-nowrap">捷運站點</th>
-                  <th class="p-2.5 whitespace-nowrap">建案名稱</th>
-                  <th class="p-2.5 whitespace-nowrap">3房坪數</th>
-                  <th class="p-2.5 whitespace-nowrap">平均單價</th>
-                  <th class="p-2.5 whitespace-nowrap">車位形式</th>
-                  <th class="p-2.5 whitespace-nowrap text-blue-900">含車位總價</th>
-                  <th class="p-2.5 whitespace-nowrap">步行時間</th>
-                  <th class="p-2.5 whitespace-nowrap">自立友善度評分</th>
-                  <th class="p-2.5 whitespace-nowrap">地圖</th>
+                  <th class="p-2 whitespace-nowrap">捷運站點</th>
+                  <th class="p-2 whitespace-nowrap">建案名稱</th>
+                  <th class="p-2 whitespace-nowrap">3房坪數</th>
+                  <th class="p-2 whitespace-nowrap">平均單價</th>
+                  <th class="p-2 whitespace-nowrap">車位形式</th>
+                  <th class="p-2 whitespace-nowrap text-blue-900">含車位總價</th>
+                  <th class="p-2 whitespace-nowrap">步行時間</th>
+                  <th class="p-2 whitespace-nowrap">自立友善度評分</th>
+                  <th class="p-2 whitespace-nowrap">地圖</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-sky-100 text-slate-700 font-normal bg-white">
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="2100">
-                  <td class="p-2.5 font-bold text-purple-900">機捷 A7 體育大學</td>
-                  <td class="p-2.5 font-bold text-blue-950">鴻築捷市達</td>
-                  <td class="p-2.5">37 ~ 41 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">46 ~ 52 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,950 ~ 2,350 萬</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">150m (2分・空橋)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.5 分</span> 免過馬路</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=鴻築捷市達" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-purple-900">機捷 A7 體育大學</td>
+                  <td class="p-2 font-bold text-blue-950">鴻築捷市達</td>
+                  <td class="p-2">37 ~ 41 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">46 ~ 52 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,950 ~ 2,350 萬</td>
+                  <td class="p-2 text-emerald-700 font-bold">150m (2分・空橋)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.5 分</span> 免過馬路</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=鴻築捷市達" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="1600">
-                  <td class="p-2.5 font-bold text-purple-900">機捷 A7 體育大學</td>
-                  <td class="p-2.5 font-bold text-blue-950">丹佛花都</td>
-                  <td class="p-2.5">31 ~ 38 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">38 ~ 42 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,450 ~ 1,750 萬</td>
-                  <td class="p-2.5">650m (8~9分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold">8.5 分</span> 總價親民安靜</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=龜山丹佛花都" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-purple-900">機捷 A7 體育大學</td>
+                  <td class="p-2 font-bold text-blue-950">丹佛花都</td>
+                  <td class="p-2">31 ~ 38 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">38 ~ 42 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,450 ~ 1,750 萬</td>
+                  <td class="p-2">650m (8~9分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 font-bold">8.5 分</span> 總價親民安靜</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=龜山丹佛花都" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="1500">
-                  <td class="p-2.5 font-bold text-purple-900">機捷 A10 山鼻站</td>
-                  <td class="p-2.5 font-bold text-blue-950">大華首捷</td>
-                  <td class="p-2.5">34 ~ 38 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">35 ~ 38 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,380 ~ 1,650 萬</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">350m (4分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.2 分</span> 街廓方正安全</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=蘆竹大華首捷" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-purple-900">機捷 A10 山鼻站</td>
+                  <td class="p-2 font-bold text-blue-950">大華首捷</td>
+                  <td class="p-2">34 ~ 38 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">35 ~ 38 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,380 ~ 1,650 萬</td>
+                  <td class="p-2 text-emerald-700 font-bold">350m (4分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.2 分</span> 街廓方正安全</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=蘆竹大華首捷" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="1650">
-                  <td class="p-2.5 font-bold text-purple-900">機捷 A10 山鼻站</td>
-                  <td class="p-2.5 font-bold text-blue-950">新潤麗蒔</td>
-                  <td class="p-2.5">33 ~ 36 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">41 ~ 44 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,550 ~ 1,780 萬</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">250m (3分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.3 分</span> 出站直線就到</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=蘆竹新潤麗蒔" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-purple-900">機捷 A10 山鼻站</td>
+                  <td class="p-2 font-bold text-blue-950">新潤麗蒔</td>
+                  <td class="p-2">33 ~ 36 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">41 ~ 44 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,550 ~ 1,780 萬</td>
+                  <td class="p-2 text-emerald-700 font-bold">250m (3分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.3 分</span> 出站直線就到</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=蘆竹新潤麗蒔" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="2600">
-                  <td class="p-2.5 font-bold text-purple-900">機捷 A19 體育園區</td>
-                  <td class="p-2.5 font-bold text-blue-950">冠德青璞匯</td>
-                  <td class="p-2.5">38 ~ 44 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">52 ~ 62 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">2,300 ~ 2,900 萬</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">0m (聯開電梯直通)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.8 分</span> 零交通風險</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=中壢冠德青璞匯" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-purple-900">機捷 A19 體育園區</td>
+                  <td class="p-2 font-bold text-blue-950">冠德青璞匯</td>
+                  <td class="p-2">38 ~ 44 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">52 ~ 62 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">2,300 ~ 2,900 萬</td>
+                  <td class="p-2 text-emerald-700 font-bold">0m (聯開電梯直通)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.8 分</span> 零交通風險</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=中壢冠德青璞匯" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="1850">
-                  <td class="p-2.5 font-bold text-purple-900">機捷 A19 體育園區</td>
-                  <td class="p-2.5 font-bold text-blue-950">誠佳品學</td>
-                  <td class="p-2.5">36 ~ 37 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">44 ~ 48 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,750 ~ 1,980 萬</td>
-                  <td class="p-2.5">600m (7~8分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold">8.9 分</span> 人行道超寬闊</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=中壢誠佳品學" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-purple-900">機捷 A19 體育園區</td>
+                  <td class="p-2 font-bold text-blue-950">誠佳品學</td>
+                  <td class="p-2">36 ~ 37 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">44 ~ 48 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,750 ~ 1,980 萬</td>
+                  <td class="p-2">600m (7~8分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 font-bold">8.9 分</span> 人行道超寬闊</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=中壢誠佳品學" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="1650">
-                  <td class="p-2.5 font-bold text-emerald-800">綠線 G01 八德站</td>
-                  <td class="p-2.5 font-bold text-blue-950">益騏福爾摩沙</td>
-                  <td class="p-2.5">37 ~ 42 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">38 ~ 42 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,500 ~ 1,780 萬</td>
-                  <td class="p-2.5">600m (7~8分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.1 分</span> 起點必定有座位</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=八德益騏福爾摩沙" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-emerald-800">綠線 G01 八德站</td>
+                  <td class="p-2 font-bold text-blue-950">益騏福爾摩沙</td>
+                  <td class="p-2">37 ~ 42 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">38 ~ 42 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,500 ~ 1,780 萬</td>
+                  <td class="p-2">600m (7~8分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.1 分</span> 起點必定有座位</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=八德益騏福爾摩沙" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="2050">
-                  <td class="p-2.5 font-bold text-orange-900">綠線 G04 大湳站</td>
-                  <td class="p-2.5 font-bold text-blue-950">桃大誠</td>
-                  <td class="p-2.5">39 ~ 43 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">43 ~ 48 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">1,900 ~ 2,250 萬</td>
-                  <td class="p-2.5">700m (8~9分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.3 分</span> 雙捷+森林公園</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=八德桃大誠" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-orange-900">綠線 G04 大湳站</td>
+                  <td class="p-2 font-bold text-blue-950">桃大誠</td>
+                  <td class="p-2">39 ~ 43 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">43 ~ 48 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">1,900 ~ 2,250 萬</td>
+                  <td class="p-2">700m (8~9分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.3 分</span> 雙捷+森林公園</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=八德桃大誠" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="2300">
-                  <td class="p-2.5 font-bold text-amber-900">G07 桃園大車站</td>
-                  <td class="p-2.5 font-bold text-blue-950">德友極</td>
-                  <td class="p-2.5">37 ~ 40 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">51 ~ 57 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">2,100 ~ 2,500 萬</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">400m (5分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold">8.8 分</span> 就業機構最密集</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=桃園區德友極" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-amber-900">G07 桃園大車站</td>
+                  <td class="p-2 font-bold text-blue-950">德友極</td>
+                  <td class="p-2">37 ~ 40 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">51 ~ 57 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">2,100 ~ 2,500 萬</td>
+                  <td class="p-2 text-emerald-700 font-bold">400m (5分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-sky-100 text-sky-800 font-bold">8.8 分</span> 就業機構最密集</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=桃園區德友極" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
                 <tr class="hover:bg-sky-50/70 transition row-item" data-price="2200">
-                  <td class="p-2.5 font-bold text-emerald-800">綠線 G09 小檜溪</td>
-                  <td class="p-2.5 font-bold text-blue-950">遠雄新綠洲</td>
-                  <td class="p-2.5">37 ~ 40 坪</td>
-                  <td class="p-2.5 text-emerald-700 font-bold">49 ~ 54 萬</td>
-                  <td class="p-2.5 text-blue-700 font-medium">坡道平面</td>
-                  <td class="p-2.5 font-black text-blue-900">2,050 ~ 2,380 萬</td>
-                  <td class="p-2.5">650m (7~8分)</td>
-                  <td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.0 分</span> 水岸綠帶舒緩</td>
-                  <td class="p-2.5"><a href="https://www.google.com/maps/search/?api=1&query=桃園遠雄新綠洲" target="_blank" class="text-sky-700 font-bold">導航↗</a></td>
+                  <td class="p-2 font-bold text-emerald-800">綠線 G09 小檜溪</td>
+                  <td class="p-2 font-bold text-blue-950">遠雄新綠洲</td>
+                  <td class="p-2">37 ~ 40 坪</td>
+                  <td class="p-2 text-emerald-700 font-bold">49 ~ 54 萬</td>
+                  <td class="p-2 text-blue-700">坡道平面</td>
+                  <td class="p-2 font-extrabold text-blue-900">2,050 ~ 2,380 萬</td>
+                  <td class="p-2">650m (7~8分)</td>
+                  <td class="p-2"><span class="px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold">9.0 分</span> 水岸綠帶舒緩</td>
+                  <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=桃園遠雄新綠洲" target="_blank" class="text-sky-700 font-semibold">導航↗</a></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- 3 Summary Pills (Larger Font) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm shrink-0">
-          <div class="p-2.5 bg-white rounded-xl border border-sky-200 shadow-xs">
-            <span class="font-extrabold text-sky-800 block mb-0.5">💡 務實首選 (1,400~1,700萬)</span>
+        <!-- 3 Summary Pills (Compact) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] shrink-0">
+          <div class="p-2 bg-white rounded-lg border border-sky-200">
+            <span class="font-bold text-sky-800 block">💡 務實首選 (1,400~1,700萬)</span>
             首推 <strong>A10 大華首捷 / 新潤麗蒔</strong> 與 <strong>G01 益騏福爾摩沙</strong>，全坡道平車。
           </div>
-          <div class="p-2.5 bg-white rounded-xl border border-sky-200 shadow-xs">
-            <span class="font-extrabold text-emerald-800 block mb-0.5">⚖️ 平衡首選 (1,750~2,200萬)</span>
+          <div class="p-2 bg-white rounded-lg border border-sky-200">
+            <span class="font-bold text-emerald-800 block">⚖️ 平衡首選 (1,750~2,200萬)</span>
             首推 <strong>A7 鴻築捷市達</strong>（空橋直達）與 <strong>G04 桃大誠</strong>（森林公園+三鶯直通）。
           </div>
-          <div class="p-2.5 bg-white rounded-xl border border-sky-200 shadow-xs">
-            <span class="font-extrabold text-blue-900 block mb-0.5">🏆 極致零風險旗艦 (>2,300萬)</span>
+          <div class="p-2 bg-white rounded-lg border border-sky-200">
+            <span class="font-bold text-blue-900 block">🏆 極致零風險旗艦 (>2,300萬)</span>
             首推 <strong>A19 冠德青璞匯</strong>（電梯下樓即捷運閘門，零車道穿越風險）。
           </div>
         </div>
@@ -1246,59 +1265,59 @@
     <!-- SLIDE 11: 父親的看屋實戰與自立演練法        -->
     <!-- ========================================== -->
     <section id="slide-10" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2.5">
-        <div class="border-b border-sky-200 pb-1.5 shrink-0">
-          <div class="text-xs font-bold text-sky-600 tracking-wider uppercase">Slide 11・實戰行動清單</div>
-          <h2 class="text-lg sm:text-2xl font-black text-blue-950 leading-tight">安居置產四項鐵則與實地看屋盲測檢核表</h2>
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="border-b border-sky-200 pb-1 shrink-0">
+          <div class="text-[10px] font-bold text-sky-600 tracking-tight uppercase">Slide 11・實戰行動清單</div>
+          <h2 class="text-base sm:text-lg font-black text-blue-950 leading-tight">安居置產四項鐵則與實地看屋盲測檢核表</h2>
         </div>
 
-        <!-- 4 Golden Rules (Expanded Text) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs sm:text-sm shrink-0">
-          <div class="glass-card-light rounded-xl p-3 border border-sky-200">
-            <span class="font-black text-sky-800 text-sm block mb-1">01. 堅持坡道平面車位</span>
-            <p class="text-slate-600 leading-normal"><strong>「機械車位絕對不碰！」</strong>避免警報聲、突發故障等待引發焦慮；父母年長接送最安心。</p>
+        <!-- 4 Golden Rules (Compact) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs shrink-0">
+          <div class="glass-card-light rounded-lg p-2.5 border border-sky-200">
+            <span class="font-bold text-sky-800 block mb-0.5">01. 堅持坡道平面車位</span>
+            <p class="text-[11px] text-slate-600"><strong>「機械車位絕對不碰！」</strong>避免警報聲、突發故障等待引發焦慮；父母年長接送最安心。</p>
           </div>
-          <div class="glass-card-light rounded-xl p-3 border border-emerald-200">
-            <span class="font-black text-emerald-800 text-sm block mb-1">02. 步行五百米・無死角動線</span>
-            <p class="text-slate-600 leading-normal">路線越筆直、人行道連續且無違停摩托車阻擋，孩子越能在腦中建立強固視覺通勤地圖。</p>
+          <div class="glass-card-light rounded-lg p-2.5 border border-emerald-200">
+            <span class="font-bold text-emerald-800 block mb-0.5">02. 步行五百米・無死角動線</span>
+            <p class="text-[11px] text-slate-600">路線越筆直、人行道連續且無違停摩托車阻擋，孩子越能在腦中建立強固視覺通勤地圖。</p>
           </div>
-          <div class="glass-card-light rounded-xl p-3 border border-purple-200">
-            <span class="font-black text-purple-800 text-sm block mb-1">03. 3房空間的自立哲學</span>
-            <p class="text-slate-600 leading-normal">父母主臥、孩子靜音感官調適臥室、生活自立訓練房（長遠可作未來全職照服員或同儕房）。</p>
+          <div class="glass-card-light rounded-lg p-2.5 border border-purple-200">
+            <span class="font-bold text-purple-800 block mb-0.5">03. 3房空間的自立哲學</span>
+            <p class="text-[11px] text-slate-600">父母主臥、孩子靜音感官調適臥室、生活自立訓練房（長遠可作未來全職照服員或同儕房）。</p>
           </div>
-          <div class="glass-card-light rounded-xl p-3 border border-blue-200">
-            <span class="font-black text-blue-800 text-sm block mb-1">04. 社區物業與友善包容</span>
-            <p class="text-slate-600 leading-normal">管委會健全、24小時警衛友善且熟悉住戶孩子，在孩子忘了鑰匙或迷惘時提供第一時間庇護。</p>
+          <div class="glass-card-light rounded-lg p-2.5 border border-blue-200">
+            <span class="font-bold text-blue-800 block mb-0.5">04. 社區物業與友善包容</span>
+            <p class="text-[11px] text-slate-600">管委會健全、24小時警衛友善且熟悉住戶孩子，在孩子忘了鑰匙或迷惘時提供第一時間庇護。</p>
           </div>
         </div>
 
-        <!-- Inspection Checklist (2 Columns Large Text) -->
-        <div class="glass-card-light rounded-xl p-4 border border-sky-200 flex-1 min-h-0 flex flex-col justify-between">
-          <h3 class="font-black text-blue-950 text-sm sm:text-base mb-2 border-b border-sky-100 pb-1.5 shrink-0">📋 帶孩子實地看屋「情境盲測演練檢核表」</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs sm:text-sm overflow-y-auto pr-1">
-            <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-sky-100 shadow-xs">
-              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600 w-4 h-4">
-              <div><strong class="text-blue-950 font-bold">1. 實測紅綠燈秒數與人行道路況：</strong>確認過馬路等待是否小於90秒、有無連續無障礙緩坡。</div>
+        <!-- Inspection Checklist (Compact 2 Columns) -->
+        <div class="glass-card-light rounded-xl p-3 border border-sky-200 flex-1 min-h-0 flex flex-col justify-between">
+          <h3 class="font-bold text-blue-950 text-xs mb-2 border-b border-sky-100 pb-1 shrink-0">📋 帶孩子實地看屋「情境盲測演練檢核表」</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px] overflow-y-auto pr-1">
+            <label class="flex items-start gap-2 p-2 rounded bg-white border border-sky-100 shadow-xs">
+              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600">
+              <div><strong class="text-blue-950">1. 實測紅綠燈秒數與人行道路況：</strong>確認過馬路等待是否小於90秒、有無連續無障礙緩坡。</div>
             </label>
-            <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-sky-100 shadow-xs">
-              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600 w-4 h-4">
-              <div><strong class="text-blue-950 font-bold">2. 捷運閘門逼卡與手扶梯速度：</strong>觀察孩子對感應聲響與電扶梯速度是否適應，確認電梯位置。</div>
+            <label class="flex items-start gap-2 p-2 rounded bg-white border border-sky-100 shadow-xs">
+              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600">
+              <div><strong class="text-blue-950">2. 捷運閘門逼卡與手扶梯速度：</strong>觀察孩子對感應聲響與電扶梯速度是否適應，確認電梯位置。</div>
             </label>
-            <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-sky-100 shadow-xs">
-              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600 w-4 h-4">
-              <div><strong class="text-blue-950 font-bold">3. 大樓氣密窗隔音實測：</strong>關窗測試是否隔絕低頻車流胎噪，確保孩子夜間睡眠安定。</div>
+            <label class="flex items-start gap-2 p-2 rounded bg-white border border-sky-100 shadow-xs">
+              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600">
+              <div><strong class="text-blue-950">3. 大樓氣密窗隔音實測：</strong>關窗測試是否隔絕低頻車流胎噪，確保孩子夜間睡眠安定。</div>
             </label>
-            <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-sky-100 shadow-xs">
-              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600 w-4 h-4">
-              <div><strong class="text-blue-950 font-bold">4. 地下平面車位與電梯動線：</strong>實測車道雙向會車視野無死角、車位是否臨近梯廳。</div>
+            <label class="flex items-start gap-2 p-2 rounded bg-white border border-sky-100 shadow-xs">
+              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600">
+              <div><strong class="text-blue-950">4. 地下平面車位與電梯動線：</strong>實測車道雙向會車視野無死角、車位是否臨近梯廳。</div>
             </label>
-            <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-sky-100 shadow-xs">
-              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600 w-4 h-4">
-              <div><strong class="text-blue-950 font-bold">5. 步行200米內超商動線：</strong>確認買早餐、便當路線平坦安全，作為生活自立訓練基地。</div>
+            <label class="flex items-start gap-2 p-2 rounded bg-white border border-sky-100 shadow-xs">
+              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600">
+              <div><strong class="text-blue-950">5. 步行200米內超商動線：</strong>確認買早餐、便當路線平坦安全，作為生活自立訓練基地。</div>
             </label>
-            <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-sky-100 shadow-xs">
-              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600 w-4 h-4">
-              <div><strong class="text-blue-950 font-bold">6. 保全警衛包容度測試：</strong>與物業警衛交談，確認未來能否友善協助留意孩子出入動態。</div>
+            <label class="flex items-start gap-2 p-2 rounded bg-white border border-sky-100 shadow-xs">
+              <input type="checkbox" checked class="mt-0.5 rounded text-sky-600">
+              <div><strong class="text-blue-950">6. 保全警衛包容度測試：</strong>與物業警衛交談，確認未來能否友善協助留意孩子出入動態。</div>
             </label>
           </div>
         </div>
@@ -1309,68 +1328,62 @@
     <!-- SLIDE 12: 結語與特教身障支援資源            -->
     <!-- ========================================== -->
     <section id="slide-11" class="slide">
-      <div class="h-full w-full flex flex-col justify-between space-y-2.5">
-        <div class="border-b border-sky-200 pb-1.5 shrink-0">
-          <div class="text-xs font-bold text-sky-600 tracking-wider uppercase">Slide 12・展望與守護</div>
-          <h2 class="text-lg sm:text-2xl font-black text-blue-950 leading-tight">結語：牽著你的手，直到你能從容走向世界</h2>
+      <div class="h-full flex flex-col justify-between space-y-2">
+        <div class="border-b border-sky-200 pb-1 shrink-0">
+          <div class="text-[10px] font-bold text-sky-600 tracking-tight uppercase">Slide 12・展望與守護</div>
+          <h2 class="text-base sm:text-lg font-black text-blue-950 leading-tight">結語：牽著你的手，直到你能從容走向世界</h2>
         </div>
 
-        <!-- Father's Letter to Son (Expansive & Warm) -->
-        <div class="glass-card-light rounded-xl border border-sky-200 p-5 sm:p-6 shadow-xs shrink-0">
-          <h3 class="font-extrabold text-blue-950 text-base sm:text-lg mb-2 flex items-center gap-2">
+        <!-- Father's Letter to Son (Compact) -->
+        <div class="glass-card-light rounded-xl border border-sky-200 p-3.5 sm:p-5 shadow-xs shrink-0">
+          <h3 class="font-bold text-blue-950 text-xs sm:text-sm mb-1.5 flex items-center gap-1.5">
             <span>💌 一位父親寫給18歲孩子的信：</span>
           </h3>
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          <p class="text-slate-600 text-xs leading-relaxed">
             「孩子，你18歲了。社會常以考駕照、開車來衡量獨立，但我比誰都清楚你每天承受了多少世界的嘈雜。我買下這間離捷運近、有獨立安靜3房的屋子，是為你打造一座無後顧之憂的<strong>『自立基地台』</strong>。只要出了大門，沿著安全的人行道走上捷運，你就能抵達上班的庇護工場、回到這個永遠為你亮著燈的家。」
           </p>
-          <p class="text-sky-800 font-bold text-sm sm:text-base mt-2">
+          <p class="text-sky-800 font-bold text-xs mt-1">
             「即使爸爸有一天會老、不能再開車載你，桃園的捷運與這座溫暖的家，會代替爸爸的雙手，牽著你穩穩地走在屬於你的自立大道上。」
           </p>
         </div>
 
-        <!-- 3 Resources Cards with Legible Text -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm flex-1 min-h-0">
-          <div class="glass-card-light rounded-xl p-3.5 border border-sky-200 flex flex-col justify-between">
-            <div>
-              <span class="font-black text-blue-800 block text-sm sm:text-base mb-1">🏢 桃園身障職業重建窗口</span>
-              <p class="text-slate-600">提供就業評估、支持性就業輔導、指派就服員陪同面試與適應。</p>
-            </div>
-            <div class="text-xs text-slate-500 mt-2 font-medium">
+        <!-- 3 Resources Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs flex-1 min-h-0">
+          <div class="glass-card-light rounded-lg p-2.5 border border-sky-200 flex flex-col justify-between">
+            <span class="font-bold text-blue-800 block text-xs mb-1">🏢 桃園身障職業重建窗口</span>
+            <p class="text-[11px] text-slate-600">就業評估、支持性就業輔導、陪同面試與職場適應。</p>
+            <div class="text-[10px] text-slate-500 mt-1">
               <div>📍 桃市府勞動局身障就業科</div>
               <div>📞 專線：(03) 332-2101 #6814</div>
             </div>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200 flex flex-col justify-between">
-            <div>
-              <span class="font-black text-emerald-800 block text-sm sm:text-base mb-1">🌱 捷運沿線重點庇護工場</span>
-              <p class="text-slate-600">自立上班安全場所：烘焙、二手物流、文書與行政助理。</p>
-            </div>
-            <div class="text-xs text-slate-500 mt-2 font-medium">
+          <div class="glass-card-light rounded-lg p-2.5 border border-emerald-200 flex flex-col justify-between">
+            <span class="font-bold text-emerald-800 block text-xs mb-1">🌱 捷運沿線庇護工場</span>
+            <p class="text-[11px] text-slate-600">自立上班安全場所：烘焙、二手物流、行政助理。</p>
+            <div class="text-[10px] text-slate-500 mt-1">
               <div>• 南崁：義美庇護、弘化農場</div>
               <div>• 市區：伊甸烘焙、心路洗衣</div>
             </div>
           </div>
 
-          <div class="glass-card-light rounded-xl p-3.5 border border-amber-200 flex flex-col justify-between">
-            <div>
-              <span class="font-black text-amber-800 block text-sm sm:text-base mb-1">💳 桃捷愛心卡與安養信託</span>
-              <p class="text-slate-600">保障交通自主與一輩子資產安全不被詐騙：</p>
-            </div>
-            <div class="text-xs text-slate-500 mt-2 font-medium">
-              <div>• 市民愛心卡：搭乘半價/點數補助</div>
-              <div>• 身心障礙安養信託與實價登錄查證</div>
+          <div class="glass-card-light rounded-lg p-2.5 border border-amber-200 flex flex-col justify-between">
+            <span class="font-bold text-amber-800 block text-xs mb-1">💳 桃捷愛心卡與安養信託</span>
+            <p class="text-[11px] text-slate-600">保障交通自主與一輩子資產安全不被詐騙：</p>
+            <div class="text-[10px] text-slate-500 mt-1">
+              <div>• 市民愛心卡：乘車半價/免費點數</div>
+              <div>• 身心障礙安養信託與內政部實價登錄</div>
             </div>
           </div>
         </div>
 
         <!-- Bottom Action Bar -->
-        <div class="pt-2 flex items-center justify-between no-print border-t border-sky-200 shrink-0">
-          <button onclick="jumpToSlide(0)" class="px-4 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-xs sm:text-sm border border-sky-200 transition shadow-xs">
+        <div class="pt-1.5 flex items-center justify-between no-print border-t border-sky-200 shrink-0">
+          <button onclick="jumpToSlide(0)" class="px-3.5 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs border border-sky-200 transition shadow-xs">
             <span>↺ 回到簡報封面</span>
           </button>
-          <button onclick="window.print()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-xs sm:text-sm transition shadow-sm">
-            <span>🖨️ 列印 / 另存為完整 PDF 報告</span>
+          <button onclick="window.print()" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold text-xs transition shadow-sm">
+            <span>🖨️ 列印 / 存為 PDF 報告</span>
           </button>
         </div>
       </div>
