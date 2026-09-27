@@ -148,16 +148,17 @@
       <select id="slideSelect" onchange="jumpToSlide(parseInt(this.value))" class="text-xs bg-white text-slate-700 border border-sky-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-sky-500 max-w-[140px] sm:max-w-none shadow-xs font-medium">
         <option value="0">第 1 頁：封面與父親心聲</option>
         <option value="1">第 2 頁：桃園未來捷運全路網總覽</option>
-        <option value="2">第 3 頁：機捷 A7 體育大學站 (醫療與空橋)</option>
-        <option value="3">第 4 頁：機捷 A10 山鼻站 (低刺激純住)</option>
-        <option value="4">第 5 頁：機捷 A18/A19 青埔特區 (人車分流頂規)</option>
-        <option value="5">第 6 頁：綠線 G01 八德站 (綠線首站好坐)</option>
-        <option value="6">第 7 頁：綠線 G04 大湳站 (雙捷共構核心)</option>
-        <option value="7">第 8 頁：綠線 G07 桃園車站 (三鐵樞紐與特教)</option>
-        <option value="8">第 9 頁：綠線 G08/G09 小檜溪 (水岸綠帶舒緩)</option>
-        <option value="9">第 10 頁：全案綜合橫向評比矩陣</option>
-        <option value="10">第 11 頁：父親看屋實戰與自立演練</option>
-        <option value="11">第 12 頁：結語與特教身障支援資源</option>
+        <option value="2">第 3 頁：桃園三環三線跨市路網圖</option>
+        <option value="3">第 4 頁：機捷 A7 體育大學站 (醫療與空橋)</option>
+        <option value="4">第 5 頁：機捷 A10 山鼻站 (低刺激純住)</option>
+        <option value="5">第 6 頁：機捷 A18/A19 青埔特區 (人車分流頂規)</option>
+        <option value="6">第 7 頁：綠線 G01 八德站 (綠線首站好坐)</option>
+        <option value="7">第 8 頁：綠線 G04 大湳站 (雙捷共構核心)</option>
+        <option value="8">第 9 頁：綠線 G07 桃園車站 (三鐵樞紐與特教)</option>
+        <option value="9">第 10 頁：綠線 G08/G09 小檜溪 (水岸綠帶舒緩)</option>
+        <option value="10">第 11 頁：全案綜合橫向評比矩陣</option>
+        <option value="11">第 12 頁：父親看屋實戰與自立演練</option>
+        <option value="12">第 13 頁：結語與特教身障支援資源</option>
       </select>
 
       <!-- Prev / Next Buttons (for slide mode) -->
@@ -165,7 +166,7 @@
         <button onclick="prevSlide()" class="p-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 transition" title="上一頁 (鍵盤 ←)">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <span id="slideCounter" class="text-xs font-mono font-bold text-sky-700 px-1.5 min-w-[42px] text-center">01/12</span>
+        <span id="slideCounter" class="text-xs font-mono font-bold text-sky-700 px-1.5 min-w-[42px] text-center">01/13</span>
         <button onclick="nextSlide()" class="p-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 transition" title="下一頁 (鍵盤 → 或 空白鍵)">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -507,16 +508,253 @@
             </div>
           </div>
           <button onclick="nextSlide()" class="shrink-0 px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-sm transition">
-            進入第三頁：各站周邊 3 房建案深度評析 ➔
+            進入第三頁：桃園「三環三線」跨市路網規劃圖 ➔
           </button>
         </div>
       </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 3: 機捷 A7 體育大學站 (龜山區)       -->
+    <!-- SLIDE 3: 桃園「三環三線」跨市軌道路網規劃圖   -->
     <!-- ========================================== -->
     <section id="slide-2" class="slide">
+      <div class="space-y-6">
+        <!-- Slide Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
+          <div>
+            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 03・北北桃都會大外環骨幹</div>
+            <h2 class="text-2xl sm:text-3xl font-black text-blue-950">桃園「三環三線」跨市軌道整合規劃圖</h2>
+            <p class="text-slate-600 text-xs sm:text-sm mt-1">
+              以「桃北跨市大外環」與「桃園三心一環」為核心骨幹，為孩子拓展無障礙、不需開車的雙北與桃園全方位生活圈。
+            </p>
+          </div>
+          <!-- Quick Status Indicator -->
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-2.5 py-1 rounded-lg badge-subway-purple font-medium">第一環：雙北內環 (環狀/文湖)</span>
+            <span class="px-2.5 py-1 rounded-lg badge-subway-orange font-medium">第二環：雙北中環 (萬大/新蘆)</span>
+            <span class="px-2.5 py-1 rounded-lg badge-subway-green font-bold border border-emerald-400">★ 第三環：桃北跨市大外環</span>
+          </div>
+        </div>
+
+        <!-- Interactive SVG Schematic Map of Three Rings Three Lines -->
+        <div class="glass-card-light rounded-2xl p-4 sm:p-6 border border-sky-200 shadow-sm overflow-hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
+            <h3 class="font-bold text-blue-950 text-sm sm:text-base flex items-center gap-2">
+              <span>🌐 北北桃「三環三線」軌道幾何架構與轉乘樞紐圖</span>
+            </h3>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="inline-flex items-center gap-1 text-emerald-800 font-semibold">
+                <span class="w-3 h-1.5 rounded-full bg-emerald-600"></span> 桃捷綠線
+              </span>
+              <span class="inline-flex items-center gap-1 text-purple-800 font-semibold">
+                <span class="w-3 h-1.5 rounded-full bg-purple-600"></span> 機場捷運
+              </span>
+              <span class="inline-flex items-center gap-1 text-orange-800 font-semibold">
+                <span class="w-3 h-1.5 rounded-full bg-orange-600"></span> 三鶯線/延伸
+              </span>
+              <span class="inline-flex items-center gap-1 text-amber-800 font-semibold">
+                <span class="w-3 h-1.5 rounded-full bg-amber-600"></span> 捷運棕線
+              </span>
+              <span class="inline-flex items-center gap-1 text-blue-800 font-semibold">
+                <span class="w-3 h-1.5 rounded-full bg-blue-600"></span> 北捷板南線
+              </span>
+            </div>
+          </div>
+
+          <!-- SVG Canvas -->
+          <div class="w-full overflow-x-auto bg-gradient-to-b from-[#F0F9FF] to-[#E0F2FE] rounded-xl p-4 border border-sky-200">
+            <svg viewBox="0 0 1000 500" class="w-full min-w-[800px] h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="lightGridRings" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(14, 165, 233, 0.08)" stroke-width="1"/>
+                </pattern>
+                <filter id="shadowGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0284C7" flood-opacity="0.15"/>
+                </filter>
+              </defs>
+              <rect width="1000" height="500" fill="url(#lightGridRings)" />
+
+              <!-- Outer Region Boundaries (Subtle Backdrop) -->
+              <ellipse cx="760" cy="220" rx="190" ry="160" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+              <text x="860" y="80" fill="#94A3B8" font-size="11" font-weight="bold">【台北/新北都會核心】</text>
+
+              <ellipse cx="360" cy="270" rx="300" ry="190" fill="none" stroke="#BAE6FD" stroke-width="2" stroke-dasharray="8 4" opacity="0.7"/>
+              <text x="140" y="100" fill="#0284C7" font-size="12" font-weight="bold">【大桃園三心生活圈・自立基地】</text>
+
+              <!-- 環一 (內環): 雙北環狀線 + 文湖線 (示意虛線) -->
+              <ellipse cx="760" cy="220" rx="90" ry="70" fill="rgba(241, 245, 249, 0.5)" stroke="#94A3B8" stroke-width="3" stroke-dasharray="4 2"/>
+              <text x="760" y="215" fill="#64748B" font-size="11" font-weight="bold" text-anchor="middle">第一環：雙北內環</text>
+              <text x="760" y="232" fill="#94A3B8" font-size="9" text-anchor="middle">(台北環狀線 / 文湖線)</text>
+
+              <!-- 環二 (中環): 萬大中和樹林線 + 新蘆線 (示意虛線) -->
+              <ellipse cx="720" cy="230" rx="150" ry="120" fill="none" stroke="#A855F7" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.6"/>
+              <text x="720" y="130" fill="#7E22CE" font-size="11" font-weight="bold" text-anchor="middle">第二環：雙北中環 (萬大樹林線 / 新蘆線)</text>
+
+              <!-- 環三 (大外環): 桃北跨市大外環 (BOLD HIGHLIGHTED!) -->
+              <!-- 1. 機場捷運 (北段 & 西段) -->
+              <path d="M 760 170 C 640 100 480 90 380 90 C 260 90 120 130 90 220 C 70 280 100 370 190 410 C 220 420 270 420 300 420" 
+                    fill="none" stroke="#7C3AED" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+              <text x="210" y="80" fill="#6D28D9" font-size="12" font-weight="900">機場捷運 (A1台北車站 ~ A7 ~ A18 ~ A23中壢)</text>
+
+              <!-- 2. 台北捷運板南線 (東段) -->
+              <path d="M 760 170 C 820 220 830 300 780 370 C 750 410 700 430 650 430" 
+                    fill="none" stroke="#2563EB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+              <text x="800" y="320" fill="#1D4ED8" font-size="12" font-weight="bold">板南線 (台北 ~ 板橋 ~ 頂埔)</text>
+
+              <!-- 3. 新北三鶯線 + 延伸八德段 (南段串接) -->
+              <path d="M 650 430 C 600 430 560 425 510 410" 
+                    fill="none" stroke="#EA580C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+              <text x="590" y="455" fill="#C2410C" font-size="11" font-weight="bold" text-anchor="middle">三鶯線延伸八德 (頂埔 ➔ LB14大湳)</text>
+
+              <!-- 4. 桃園捷運綠線 (中軸/貫穿段) -->
+              <path d="M 380 90 C 370 150 380 200 430 290 L 510 410 L 470 450" 
+                    fill="none" stroke="#059669" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+              <text x="360" y="195" fill="#047857" font-size="12" font-weight="900">捷運綠線 (G32坑口 ~ G07桃園 ~ G01八德)</text>
+
+              <!-- 5. 捷運綠線延伸中壢段 (桃園市內大外環關鍵閉環！) -->
+              <path d="M 470 450 C 400 470 340 460 300 420" 
+                    fill="none" stroke="#10B981" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 6"/>
+              <text x="380" y="485" fill="#059669" font-size="11" font-weight="bold" text-anchor="middle">綠線延伸中壢 (全線大閉環關鍵・核定規劃中)</text>
+
+              <!-- 6. 捷運棕線 (跨市直捷穿心射線！) -->
+              <path d="M 430 290 C 490 260 550 230 620 200" 
+                    fill="none" stroke="#D97706" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 4"/>
+              <text x="540" y="240" fill="#B45309" font-size="11" font-weight="900" transform="rotate(-18 540 240)">捷運棕線 (桃園車站 ➔ 迴龍接新莊線)</text>
+
+              <!-- 轉乘樞紐核心大節點 -->
+              <!-- 台北車站 -->
+              <circle cx="760" cy="170" r="10" fill="#2563EB" stroke="#FFFFFF" stroke-width="3" filter="url(#shadowGlow)"/>
+              <rect x="710" y="130" width="100" height="26" rx="6" fill="#1E3A8A" opacity="0.95"/>
+              <text x="760" y="147" fill="#FFFFFF" font-size="11" font-weight="bold" text-anchor="middle">A1 台北車站</text>
+
+              <!-- 迴龍站 -->
+              <circle cx="620" cy="200" r="9" fill="#D97706" stroke="#FFFFFF" stroke-width="2.5" filter="url(#shadowGlow)"/>
+              <rect x="585" y="165" width="75" height="24" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+              <text x="622" y="181" fill="#92400E" font-size="10" font-weight="bold" text-anchor="middle">迴龍站(新莊)</text>
+
+              <!-- 頂埔站 -->
+              <circle cx="650" cy="430" r="9" fill="#2563EB" stroke="#FFFFFF" stroke-width="2.5" filter="url(#shadowGlow)"/>
+              <rect x="620" y="395" width="65" height="24" rx="5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+              <text x="652" y="411" fill="#1E40AF" font-size="10" font-weight="bold" text-anchor="middle">頂埔站(土城)</text>
+
+              <!-- G04 大湳站 ★★★ -->
+              <circle cx="510" cy="410" r="12" fill="#EA580C" stroke="#FFFFFF" stroke-width="3.5" filter="url(#shadowGlow)"/>
+              <circle cx="510" cy="410" r="6" fill="#059669"/>
+              <rect x="465" y="360" width="105" height="34" rx="7" fill="#FFF7ED" stroke="#EA580C" stroke-width="2"/>
+              <text x="517" y="375" fill="#9A3412" font-size="10" font-weight="bold" text-anchor="middle">★ G04 大湳站</text>
+              <text x="517" y="388" fill="#047857" font-size="8" font-weight="bold" text-anchor="middle">綠線 ⟷ 三鶯雙捷交會</text>
+
+              <!-- G07 桃園大車站 ★★★ -->
+              <circle cx="430" cy="290" r="13" fill="#059669" stroke="#FFFFFF" stroke-width="3.5" filter="url(#shadowGlow)"/>
+              <circle cx="430" cy="290" r="7" fill="#D97706"/>
+              <rect x="375" y="245" width="115" height="34" rx="7" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+              <text x="432" y="260" fill="#065F46" font-size="10" font-weight="bold" text-anchor="middle">★ G07 桃園車站</text>
+              <text x="432" y="273" fill="#B45309" font-size="8" font-weight="bold" text-anchor="middle">台鐵 ⟷ 綠線 ⟷ 棕線</text>
+
+              <!-- G01 八德站 -->
+              <circle cx="470" cy="450" r="9" fill="#059669" stroke="#FFFFFF" stroke-width="2.5"/>
+              <text x="470" y="475" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">G01 八德站</text>
+
+              <!-- A23 中壢車站 ★★★ -->
+              <circle cx="300" cy="420" r="12" fill="#7C3AED" stroke="#FFFFFF" stroke-width="3" filter="url(#shadowGlow)"/>
+              <circle cx="300" cy="420" r="6" fill="#10B981"/>
+              <rect x="245" y="375" width="110" height="34" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/>
+              <text x="300" y="390" fill="#5B21B6" font-size="10" font-weight="bold" text-anchor="middle">★ A23 中壢車站</text>
+              <text x="300" y="403" fill="#047857" font-size="8" font-weight="bold" text-anchor="middle">機捷 ⟷ 綠線 ⟷ 台鐵地下化</text>
+
+              <!-- A18 高鐵桃園站 -->
+              <circle cx="160" cy="360" r="9" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
+              <text x="160" y="345" fill="#4C1D95" font-size="10" font-weight="bold" text-anchor="middle">A18 高鐵桃園</text>
+
+              <!-- A7 體育大學站 -->
+              <circle cx="530" cy="115" r="9" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
+              <text x="530" y="105" fill="#4C1D95" font-size="10" font-weight="bold" text-anchor="middle">A7 體育大學</text>
+
+              <!-- A11 / G32 坑口交會站 -->
+              <circle cx="380" cy="90" r="9" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
+              <text x="380" y="75" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">A11/G32 坑口雙捷</text>
+
+              <!-- Explanatory Badge on Map -->
+              <g transform="translate(40, 160)">
+                <rect width="210" height="85" rx="8" fill="#FFFFFF" opacity="0.9" stroke="#BAE6FD" stroke-width="1.5" filter="url(#shadowGlow)"/>
+                <text x="15" y="22" fill="#0284C7" font-size="11" font-weight="bold">🎯 三環三線核心價值：</text>
+                <text x="15" y="40" fill="#334155" font-size="9">• 外環全長 100+ 公里軌道閉環</text>
+                <text x="15" y="55" fill="#334155" font-size="9">• 跨市雙向直達（雙北特教/就業）</text>
+                <text x="15" y="70" fill="#334155" font-size="9">• 軌道定時定點，乘車不焦慮迷航</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 3 Feature Detail Cards for Father & Family -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <!-- Card 1 -->
+          <div class="glass-card-light rounded-xl p-3.5 border border-emerald-200">
+            <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-emerald-100">
+              <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-xs">環</span>
+              <h4 class="font-bold text-emerald-950 text-sm">桃北「第三環」大外環閉環</h4>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-2">
+              由<strong>「機捷＋綠線＋綠線延伸中壢＋三鶯線＋板南線」</strong>串聯形成的超大首都環狀線。
+            </p>
+            <div class="bg-emerald-50/70 p-2 rounded-lg text-[11px] text-emerald-900 space-y-1">
+              <div>• <strong>市區無縫循環：</strong>串聯航空城、桃園、中壢三大核心。</div>
+              <div>• <strong>閉環不迷航：</strong>搭錯車也能順著環線回起點，大幅減輕孩子搭車焦慮。</div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card-light rounded-xl p-3.5 border border-orange-200">
+            <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-orange-100">
+              <span class="w-6 h-6 rounded-full bg-orange-100 text-orange-800 font-bold flex items-center justify-center text-xs">線</span>
+              <h4 class="font-bold text-orange-950 text-sm">跨市「三線直通」雙北捷運</h4>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-2">
+              打破市界隔閡，讓無照青年無需家長接送也能自立通往雙北：
+            </p>
+            <div class="bg-orange-50/70 p-2 rounded-lg text-[11px] text-orange-900 space-y-1">
+              <div>• <strong>三鶯線延伸八德：</strong>G04大湳直通土城頂埔，轉板南線進板橋/台北。</div>
+              <div>• <strong>捷運棕線：</strong>桃園車站直達新莊迴龍，銜接新蘆線與萬大樹林線。</div>
+              <div>• <strong>機場捷運：</strong>快速直達三重、北車與林口長庚醫療生活圈。</div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-card-light rounded-xl p-3.5 border border-blue-200">
+            <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-blue-100">
+              <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-bold flex items-center justify-center text-xs">🎯</span>
+              <h4 class="font-bold text-blue-950 text-sm">父親的置產戰略佈局</h4>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-2">
+              為孩子挑選一生安居的居所，三環三線給了最清晰的答案：
+            </p>
+            <div class="bg-blue-50/70 p-2 rounded-lg text-[11px] text-blue-900 space-y-1">
+              <div>• <strong>首選交會站：</strong>如八德G04（雙捷）、桃園G07（三鐵）、A7（空橋/醫療）。</div>
+              <div>• <strong>就業生活半徑擴大：</strong>孩子就業不侷限單一行政區，大幅增加庇護工場選擇。</div>
+              <div>• <strong>保值抗跌性強：</strong>跨市樞紐人潮與建設確定性高，長久穩定不貶值。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Next -->
+        <div class="p-3.5 rounded-xl bg-white border border-sky-200 text-xs text-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🧭</span>
+            <span class="text-slate-600">
+              掌握三環三線宏觀格局後，下一頁開始逐站檢視周邊適合3房與坡道平車的精選建案。
+            </span>
+          </div>
+          <button onclick="nextSlide()" class="shrink-0 px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-sm transition">
+            進入第四頁：機捷 A7 體育大學站周邊建案 ➔
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 4: 機捷 A7 體育大學站 (龜山區)       -->
+    <!-- ========================================== -->
+    <section id="slide-3" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -753,9 +991,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 4: 機捷 A10 山鼻站 (蘆竹區)         -->
+    <!-- SLIDE 5: 機捷 A10 山鼻站 (蘆竹區)         -->
     <!-- ========================================== -->
-    <section id="slide-3" class="slide">
+    <section id="slide-4" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -982,9 +1220,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 5: 機捷 A18 / A19 青埔特區           -->
+    <!-- SLIDE 6: 機捷 A18 / A19 青埔特區           -->
     <!-- ========================================== -->
-    <section id="slide-4" class="slide">
+    <section id="slide-5" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -1208,9 +1446,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 6: 捷運綠線 G01 八德站 (八德擴大)    -->
+    <!-- SLIDE 7: 捷運綠線 G01 八德站 (八德擴大)    -->
     <!-- ========================================== -->
-    <section id="slide-5" class="slide">
+    <section id="slide-6" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -1436,9 +1674,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 7: 捷運綠線 G04 大湳站 (雙捷共構)    -->
+    <!-- SLIDE 8: 捷運綠線 G04 大湳站 (雙捷共構)    -->
     <!-- ========================================== -->
-    <section id="slide-6" class="slide">
+    <section id="slide-7" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -1663,9 +1901,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 8: 捷運綠線 G07 桃園車站 (三鐵樞紐)  -->
+    <!-- SLIDE 9: 捷運綠線 G07 桃園車站 (三鐵樞紐)   -->
     <!-- ========================================== -->
-    <section id="slide-7" class="slide">
+    <section id="slide-8" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -1891,9 +2129,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 9: 捷運綠線 G08 / G09 小檜溪重劃區   -->
+    <!-- SLIDE 10: 捷運綠線 G08 / G09 小檜溪重劃區  -->
     <!-- ========================================== -->
-    <section id="slide-8" class="slide">
+    <section id="slide-9" class="slide">
       <div class="space-y-6">
         <!-- Station Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
@@ -2116,14 +2354,14 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 10: 全案大數據橫向比較矩陣           -->
+    <!-- SLIDE 11: 全案大數據橫向比較矩陣           -->
     <!-- ========================================== -->
-    <section id="slide-9" class="slide">
+    <section id="slide-10" class="slide">
       <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
           <div>
-            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 10・全數據橫向評比儀表板</div>
+            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 11・全數據橫向評比儀表板</div>
             <h2 class="text-2xl sm:text-3xl font-black text-blue-950">全案綜合橫向評比矩陣：價格、車位、步程與友善度</h2>
             <p class="text-slate-600 text-xs sm:text-sm mt-1">
               將所有精選建案依單價、總價、車位規格（全平面）、步行時間與特教友善度整合，一目瞭然。
@@ -2312,14 +2550,14 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 11: 父親的看屋實戰與自立演練法        -->
+    <!-- SLIDE 12: 父親的看屋實戰與自立演練法        -->
     <!-- ========================================== -->
-    <section id="slide-10" class="slide">
+    <section id="slide-11" class="slide">
       <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
           <div>
-            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 11・父親的實戰行動清單</div>
+            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 12・父親的實戰行動清單</div>
             <h2 class="text-2xl sm:text-3xl font-black text-blue-950">自閉症孩子安居置產四項鐵則與實地看屋檢核表</h2>
             <p class="text-slate-600 text-xs sm:text-sm mt-1">
               買房子不只是挑選建材與坪數，更是在為孩子打造一套能陪伴他30年以上的自立生存支援系統。
@@ -2444,14 +2682,14 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- SLIDE 12: 結語與特教身障支援資源            -->
+    <!-- SLIDE 13: 結語與特教身障支援資源            -->
     <!-- ========================================== -->
-    <section id="slide-11" class="slide">
+    <section id="slide-12" class="slide">
       <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-sky-200 pb-4 gap-4">
           <div>
-            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 12・展望與守護</div>
+            <div class="text-xs font-bold text-sky-600 tracking-wider uppercase mb-1">Slide 13・展望與守護</div>
             <h2 class="text-2xl sm:text-3xl font-black text-blue-950">結語：牽著你的手，直到你能從容走向世界</h2>
             <p class="text-slate-600 text-xs sm:text-sm mt-1">
               房子是容器，愛與制度才是長遠的保證；桃園市特教就業輔導與庇護資源完整指引。
@@ -2532,7 +2770,7 @@
   <!-- Presentation Script Logic -->
   <script>
     let currentSlide = 0;
-    const totalSlides = 12;
+    const totalSlides = 13;
     let isContinuous = false;
 
     function updateSlide() {
