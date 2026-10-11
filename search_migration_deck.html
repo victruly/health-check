@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Custom Search API 置換與 Agent 搜尋架構升級提案</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --primary-light: #e8f0fe;
+      --accent: #0284c7;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-page: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    .slide {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .custom-shadow {
+      box-shadow: 0 10px 30px -5px rgba(26, 115, 232, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+    }
+
+    .code-block {
+      background-color: #0f172a;
+      color: #e2e8f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .badge-blue {
+      background-color: #e8f0fe;
+      color: #1a73e8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-amber {
+      background-color: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-emerald {
+      background-color: #d1fae5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-rose {
+      background-color: #ffe4e6;
+      color: #e11d48;
+      border: 1px solid #fecdd3;
+    }
+
+    /* Print / PDF view adjustment */
+    @media print {
+      body { background: white; }
+      .nav-bar, .indicator-bar { display: none !important; }
+      .slide { display: flex !important; opacity: 1 !important; transform: none !important; page-break-after: always; height: 100vh !important; }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- Top Header / Navigation Info -->
+  <header class="w-full bg-white border-b border-slate-200 px-8 py-3.5 flex justify-between items-center z-20">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+        G
+      </div>
+      <div>
+        <h1 class="text-base font-bold text-slate-800 leading-tight">搜尋架構現代化遷移專案</h1>
+        <p class="text-xs text-slate-500">Google Custom Search API 置換與 Agent 搜尋轉型提案</p>
+      </div>
+    </div>
+
+    <!-- Slide progress & metadata -->
+    <div class="flex items-center space-x-6">
+      <div class="hidden md:flex items-center space-x-2 text-xs text-slate-500">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>半導體 / 晶圓製造 Agent 搜尋系統</span>
+      </div>
+      <div class="flex items-center bg-slate-100 rounded-full px-3 py-1 text-xs font-semibold text-slate-700">
+        <span>Slide </span>
+        <span id="currentSlideNum" class="mx-1 text-blue-600 font-bold">1</span>
+        <span>/ 7</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Slide Viewport -->
+  <main class="flex-1 flex items-center justify-center p-4 md:p-8 max-w-7xl mx-auto w-full">
+
+    <!-- ==================== SLIDE 1 ==================== -->
+    <section id="slide-1" class="slide active flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 01 · 策略背景</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">Custom Search JSON API 置換緣由</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">Google 官方政策強制退場，傳統全網 SERP 模式進入終局，架構轉型勢在必行</p>
+        </div>
+        <span class="badge-amber text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center">
+          ⚠️ 最終退場日：2027-01-01
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto">
+        <!-- Card 1 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-300 transition-all">
+          <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold mb-3">
+            01
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-2">Google 終止支援時程</h3>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2 font-bold">•</span>
+              <span><strong>已停收新戶</strong>：新專案無法再開通 Custom Search JSON API 服務。</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2 font-bold">•</span>
+              <span><strong>現存客戶限期</strong>：既有 API Key 最晚僅能運作至 2026 年底。</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2 font-bold">•</span>
+              <span><strong>倒數關鍵期</strong>：距正式斷線僅存約一季充裕測試轉移窗口。</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-300 transition-all">
+          <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold mb-3">
+            02
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-2">為何官方「不再提供全網 API」？</h3>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2 font-bold">•</span>
+              <span><strong>AI 數據護城河</strong>：防止競爭對手以低廉代價（$5/千次）爬取 Google 搜尋庫訓練 AI。</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2 font-bold">•</span>
+              <span><strong>保護廣告核心營收</strong>：鼓勵使用者回到 google.com 首頁產生廣告曝光。</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2 font-bold">•</span>
+              <span><strong>全面押注企業高單價平台</strong>：重心移轉至 Vertex AI 高階合約。</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-300 transition-all">
+          <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold mb-3">
+            03
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-2">對公司目前系統的衝擊</h3>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li class="flex items-start">
+              <span class="text-amber-500 mr-2 font-bold">!</span>
+              <span><strong>無法 1:1 直球置換</strong>：GCP Agent Search 是「私有知識庫」，非全網檢索。</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-amber-500 mr-2 font-bold">!</span>
+              <span><strong>單一 API 時代終結</strong>：需將「站內規格檢索」與「全網即時搜尋」正式分流。</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-emerald-500 mr-2 font-bold">✓</span>
+              <span><strong>系統升級契機</strong>：引進 Adapter 架構與內文提取，全面強化 Agent 準確度。</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg text-sm text-blue-900 flex items-center justify-between">
+        <div>
+          <span class="font-bold">轉移戰略核心：</span> 絕不硬賭 Google 重開全網 API；落實「指定站台搜走 Agent Search、全網搜尋走可抽換 Adapter」雙軌制。
+        </div>
+        <span class="text-xs bg-white px-3 py-1 rounded-full text-blue-700 font-semibold border border-blue-200">雙軌並行 · 零停機</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 2 ==================== -->
+    <section id="slide-2" class="slide flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 02 · 官方解方</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">Agent Search 可用的解決方案</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">專注於可控站點（< 50 Domain）的頂級語意檢索與過渡呼叫方案</p>
+        </div>
+        <span class="badge-emerald text-xs font-semibold px-3 py-1.5 rounded-lg">
+          Google Cloud 原生託管
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
+        <!-- Left: Capabilities & Constraints -->
+        <div class="space-y-4">
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+            <h3 class="text-base font-bold text-slate-800 flex items-center mb-3">
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs mr-2">1</span>
+              Website Data Store（站點資料庫架構）
+            </h3>
+            <p class="text-sm text-slate-600 mb-3 leading-relaxed">
+              將公司常用外部站點（如 JEDEC, SEMICON, 專利局, 設備大廠官網）集中索引。
+            </p>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="p-3 bg-white rounded-lg border border-slate-200">
+                <span class="font-bold text-blue-700 block mb-1">Basic Indexing (推薦)</span>
+                <span>借用 Google 全網現存索引，<strong>無需網域所有權驗證</strong>，隨開即用，成本低。</span>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-slate-200">
+                <span class="font-bold text-slate-700 block mb-1">Advanced Indexing</span>
+                <span>需 Google Search Console 網域驗證，僅適用自家企業門戶，成本較高。</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed">
+            <span class="font-bold block text-sm text-amber-800 mb-1">⚠️ 關鍵邊界：50 Domain 上限</span>
+            單一 Website Data Store 官方規格限定約 50 個 Root Domain。因此 Agent Search 適用於<strong>高權威核心站點</strong>，不適合漫無目的長尾搜尋。
+          </div>
+        </div>
+
+        <!-- Right: searchLite vs search -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-800 flex items-center mb-3">
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs mr-2">2</span>
+              接口演進：searchLite 快速過渡 → search 正式上線
+            </h3>
+
+            <!-- Comparison mini-table -->
+            <div class="overflow-hidden border border-slate-200 rounded-lg bg-white text-xs mb-4">
+              <table class="w-full text-left">
+                <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                  <tr>
+                    <th class="p-2.5">指標</th>
+                    <th class="p-2.5 text-blue-600">searchLite (過渡階段)</th>
+                    <th class="p-2.5 text-emerald-600">search (目標架構)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td class="p-2.5 font-medium">認證模式</td>
+                    <td class="p-2.5"><strong>API Key</strong> (與舊版相同)</td>
+                    <td class="p-2.5"><strong>OAuth 服務帳號 Token</strong></td>
+                  </tr>
+                  <tr>
+                    <td class="p-2.5 font-medium">遷移成本</td>
+                    <td class="p-2.5 text-emerald-600 font-bold">極低 (半天即可跑通)</td>
+                    <td class="p-2.5">中等 (需掛載憑證生命週期)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-2.5 font-medium">功能支援</td>
+                    <td class="p-2.5">公開網站檢索 (Title/Snippet)</td>
+                    <td class="p-2.5">私有文件、AI 摘要、權限控管</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="p-3 bg-blue-50 rounded-lg text-xs text-blue-800">
+            <strong>落地戰術：</strong> 10 月先透過 <code>searchLite</code> 完成初步對接，確保服務不中斷；11~12 月切換為企業級 <code>OAuth Service Account</code>。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 3 (NEW) ==================== -->
+    <section id="slide-3" class="slide flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 03 · 決策分析</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">自建 Google 爬蟲之困境 vs. 第三方規模優勢</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">為何企業「自建爬蟲」是高成本負資產？為何外部專業供應商能做到極致低價穩定？</p>
+        </div>
+        <span class="badge-rose text-xs font-semibold px-3 py-1.5 rounded-lg">
+          Build vs Buy 關鍵評估
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
+        <!-- Left: Why In-House Crawling is extremely difficult -->
+        <div class="bg-rose-50/50 border border-rose-200 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-2 mb-3">
+              <span class="w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center font-bold text-xs">✕</span>
+              <h3 class="text-base font-bold text-rose-900">自建 Google 爬蟲的 4 大死穴</h3>
+            </div>
+
+            <ul class="space-y-3 text-xs md:text-sm text-slate-700">
+              <li class="p-2.5 bg-white rounded-lg border border-rose-100 shadow-xs">
+                <strong class="text-rose-700 block mb-0.5">1. 機房 IP 秒封與 CAPTCHA 阻斷</strong>
+                GCP/AWS 雲端主機請求數十次即被識別為機房流量，強制彈出 reCAPTCHA 或 429 拒絕。外購住宅代理（$3~$8/GB）成本甚至直接超越 API！
+              </li>
+              <li class="p-2.5 bg-white rounded-lg border border-rose-100 shadow-xs">
+                <strong class="text-rose-700 block mb-0.5">2. HTML DOM 混淆與頻繁改版</strong>
+                Google 搜尋頁 class 高度混淆（如 <code>.yuRUbf</code>）且全球頻繁 A/B 測試。解析器每隔數週失效一次，工程師需 24 小時待命修復。
+              </li>
+              <li class="p-2.5 bg-white rounded-lg border border-rose-100 shadow-xs">
+                <strong class="text-rose-700 block mb-0.5">3. 瀏覽器指紋（TLS/JA3/Headless）檢測</strong>
+                單純 HTTP 請求被指紋秒識破；若用 Playwright/Puppeteer 模擬，記憶體開銷龐大，單次查詢延遲暴增至 3~6 秒以上。
+              </li>
+              <li class="p-2.5 bg-white rounded-lg border border-rose-100 shadow-xs">
+                <strong class="text-rose-700 block mb-0.5">4. 成本效益嚴重倒掛</strong>
+                光是買 Proxy 流量 + 主機費 + 維護人力工時，自建每千次成本輕易超過 <strong>$3 ~ $5 USD</strong>，造輪子反而貴數倍。
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-3 p-2 bg-rose-100/60 rounded text-[11px] text-rose-800 font-medium text-center">
+            結論：自建爬蟲將陷入無限「貓捉老鼠」的維護泥淖
+          </div>
+        </div>
+
+        <!-- Right: Why 3rd party providers can easily do it -->
+        <div class="bg-blue-50/50 border border-blue-200 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-2 mb-3">
+              <span class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs">✓</span>
+              <h3 class="text-base font-bold text-blue-900">第三方供應商（如 Serper）為何能輕鬆搞定？</h3>
+            </div>
+
+            <ul class="space-y-3 text-xs md:text-sm text-slate-700">
+              <li class="p-2.5 bg-white rounded-lg border border-blue-100 shadow-xs">
+                <strong class="text-blue-700 block mb-0.5">1. 超大規模經濟效益（Economies of Scale）</strong>
+                服務商每日消化數億次請求，以批發價向全球電信商採購數百萬顆真實家庭住宅 IP 池，單位頻寬成本趨近於零。
+              </li>
+              <li class="p-2.5 bg-white rounded-lg border border-blue-100 shadow-xs">
+                <strong class="text-blue-700 block mb-0.5">2. 專職 24/7 反爬攻防與 DOM 解析團隊</strong>
+                專門工程團隊 24 小時監控 Google 全球語系 DOM 結構異動，幾分鐘內自動熱更新解析模組，研發成本由全球數萬客戶共同攤提。
+              </li>
+              <li class="p-2.5 bg-white rounded-lg border border-blue-100 shadow-xs">
+                <strong class="text-blue-700 block mb-0.5">3. 全天候預熱管道（延遲低至 < 0.8s）</strong>
+                維持巨量已暖機、高併發的連接通道，無需像自建那樣每次啟動肥大的 Chrome 瀏覽器，查詢響應極快。
+              </li>
+              <li class="p-2.5 bg-white rounded-lg border border-blue-100 shadow-xs">
+                <strong class="text-blue-700 block mb-0.5">4. 極致單價（~$1 / 千次）與零維運負擔</strong>
+                以標準 RESTful JSON 吐出乾淨結果，企業完全無需分心維運爬蟲，開箱即用。
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-3 p-2 bg-blue-100/60 rounded text-[11px] text-blue-800 font-medium text-center">
+            結論：外購服務享有全球規模紅利，ROI 與穩定度遠勝自建
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 p-3 bg-slate-100 border-l-4 border-slate-700 rounded-r-lg text-xs text-slate-800 flex items-center justify-between">
+        <div>
+          <strong>主管決策洞察：</strong> 我們是半導體/晶圓製造企業，工程能量應集中於「晶圓數據、Agent 智慧推理與核心業務」，而非浪費時間與 Google 防爬工程師對抗。
+        </div>
+        <span class="text-xs bg-white px-2.5 py-1 rounded-full text-slate-700 font-semibold border border-slate-300">專注核心價值</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 4 (formerly 3) ==================== -->
+    <section id="slide-4" class="slide flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 04 · 外部選型</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">第三方全網搜尋來源比較表</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">針對不限網域的 Open-Web Search，評估市場主流供應商優缺點與合規性</p>
+        </div>
+        <span class="badge-blue text-xs font-semibold px-3 py-1.5 rounded-lg">
+          主路徑 + 備援機制
+        </span>
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="overflow-x-auto my-auto border border-slate-200 rounded-xl bg-white">
+        <table class="w-full text-left text-xs md:text-sm">
+          <thead class="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+            <tr>
+              <th class="p-3.5">供應商</th>
+              <th class="p-3.5">索引來源類型</th>
+              <th class="p-3.5">每千次查詢成本</th>
+              <th class="p-3.5">繁中 / 台灣產業召回率</th>
+              <th class="p-3.5">Google 語法相容度</th>
+              <th class="p-3.5">資安與合規評級</th>
+              <th class="p-3.5">建議定位</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700">
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="p-3.5 font-bold flex items-center text-blue-600">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 mr-2"></span>
+                Serper.dev
+              </td>
+              <td class="p-3.5">Google SERP 即時代理</td>
+              <td class="p-3.5 font-semibold text-emerald-600">~$1.00</td>
+              <td class="p-3.5">★★★★★ (等同原生 Google)</td>
+              <td class="p-3.5">★★★★★ (完整支援 site:, filetype:)</td>
+              <td class="p-3.5"><span class="badge-amber px-2 py-0.5 rounded text-xs">需法務備查</span></td>
+              <td class="p-3.5"><span class="badge-blue px-2 py-0.5 rounded text-xs font-bold">主路徑首選</span></td>
+            </tr>
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="p-3.5 font-bold flex items-center text-slate-900">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-400 mr-2"></span>
+                Brave Search API
+              </td>
+              <td class="p-3.5">自有百億級獨立索引</td>
+              <td class="p-3.5">~$3.00 ~ $5.00</td>
+              <td class="p-3.5">★★★☆☆ (英文強，繁中稍弱)</td>
+              <td class="p-3.5">★★★☆☆ (基礎語法)</td>
+              <td class="p-3.5"><span class="badge-emerald px-2 py-0.5 rounded text-xs">條款正規合規</span></td>
+              <td class="p-3.5"><span class="badge-amber px-2 py-0.5 rounded text-xs font-bold">備援路徑首選</span></td>
+            </tr>
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="p-3.5 font-bold flex items-center text-slate-900">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-400 mr-2"></span>
+                Tavily Search
+              </td>
+              <td class="p-3.5">專為 AI 設計之聚合層</td>
+              <td class="p-3.5">~$5.00 ~ $8.00</td>
+              <td class="p-3.5">★★★★☆ (自動萃取正文)</td>
+              <td class="p-3.5">★★★☆☆ (偏自然語言)</td>
+              <td class="p-3.5"><span class="badge-emerald px-2 py-0.5 rounded text-xs">企業版支援</span></td>
+              <td class="p-3.5"><span class="text-slate-500 text-xs">特定 Agent 工具</span></td>
+            </tr>
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="p-3.5 font-bold flex items-center text-slate-900">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-400 mr-2"></span>
+                SerpAPI
+              </td>
+              <td class="p-3.5">老牌多引擎爬蟲解析</td>
+              <td class="p-3.5 text-amber-700">~$10+ (月租固定費高)</td>
+              <td class="p-3.5">★★★★★ (等同原生 Google)</td>
+              <td class="p-3.5">★★★★★ (完整相容)</td>
+              <td class="p-3.5"><span class="badge-amber px-2 py-0.5 rounded text-xs">爬蟲代理模式</span></td>
+              <td class="p-3.5"><span class="text-slate-400 text-xs">成本過高不採納</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Decision Rationale -->
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-3 bg-blue-50/70 rounded-lg border border-blue-200 text-blue-900">
+          <strong>為何 Serper 作為主路徑？</strong> 晶圓廠工程師高度依賴 <code>site:</code> 與 <code>filetype:pdf</code> 抓取外廠公開 Datasheet，Serper 幾乎能 1:1 保持原使用習慣且單價極為低廉。
+        </div>
+        <div class="p-3 bg-slate-100 rounded-lg border border-slate-200 text-slate-700">
+          <strong>為何以 Brave 為備援？</strong> Brave 是完全合法的獨立商業索引，不牽涉爬蟲爭議，若法務或 Google 防爬機制有所變動，可隨時一鍵無縫切換。
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 5 (formerly 4) ==================== -->
+    <section id="slide-5" class="slide flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 05 · 架構落地</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">Search Adapter 架構設計</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">無縫相容舊版呼叫規格，達到「前端呼叫零修改、底層後端可抽換」</p>
+        </div>
+        <span class="badge-emerald text-xs font-semibold px-3 py-1.5 rounded-lg">
+          Drop-in Replacement
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
+        <!-- Architecture Diagram & Concept -->
+        <div class="space-y-4">
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+            <h3 class="text-sm font-bold text-slate-800 mb-2">系統呼叫轉接架構</h3>
+            <!-- Clean SVG Flow -->
+            <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs flex flex-col space-y-2">
+              <div class="p-2 bg-blue-50 border border-blue-200 text-blue-800 rounded font-semibold text-center">
+                既有 AI Agent / 內部系統 (調用層)
+              </div>
+              <div class="text-center text-slate-400 font-bold">↓ 永遠發送 search(query, num)</div>
+              <div class="p-2.5 bg-slate-800 text-white rounded font-bold text-center border-2 border-blue-500">
+                Unified Search Adapter (轉接核心)
+                <div class="text-[11px] font-normal text-slate-300 mt-0.5">關鍵字脫敏檢核 · 路由分流 · 格式正規化</div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <div class="p-2 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-center">
+                  <strong>指定站台路由</strong><br>Agent Search (searchLite)
+                </div>
+                <div class="p-2 bg-blue-50 border border-blue-200 text-blue-800 rounded text-center">
+                  <strong>全網搜尋路由</strong><br>Serper (主) / Brave (備)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900">
+            <strong>正規化標準回傳格式：</strong><br>
+            Adapter 一律將不同供應商的原始 Payload 轉換為統一陣列：<br>
+            <code>[{ "title": "...", "link": "...", "snippet": "..." }]</code>，舊版程式邏輯完全不需改寫。
+          </div>
+        </div>
+
+        <!-- Code Snippet: Minimal Adaptation -->
+        <div class="code-block rounded-xl p-4 text-xs flex flex-col justify-between overflow-hidden shadow-inner">
+          <div class="flex justify-between items-center pb-2 border-b border-slate-700 text-slate-400">
+            <span>search_adapter.py (核心實作雛形)</span>
+            <span class="text-emerald-400">● 隨插即用</span>
+          </div>
+
+          <pre class="overflow-x-auto py-2 leading-relaxed text-slate-300">
+<code><span class="text-blue-400">class</span> <span class="text-yellow-300">SearchAdapter</span>:
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">search</span>(self, query: str, num: int = 10):
+        <span class="text-slate-500"># 1. 晶圓廠機密關鍵字脫敏檢查</span>
+        sanitized_q = self.sanitize_query(query)
+        
+        <span class="text-slate-500"># 2. 智慧路由：判斷是否命中指定白名單網站</span>
+        <span class="text-blue-400">if</span> self.is_whitelisted_site(query):
+            <span class="text-blue-400">return</span> self._query_agent_search(sanitized_q, num)
+            
+        <span class="text-slate-500"># 3. 全網搜尋主路徑 (Serper) + 自動故障轉移 (Brave)</span>
+        <span class="text-blue-400">try</span>:
+            <span class="text-blue-400">return</span> self._query_serper(sanitized_q, num)
+        <span class="text-blue-400">except</span> ProviderError:
+            <span class="text-blue-400">return</span> self._query_brave(sanitized_q, num)
+
+    <span class="text-slate-500"># 4. 輸出與舊版 customsearch.items 完全一致的資料型態</span></code></pre>
+
+          <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between">
+            <span>相容於 <code>customsearch/v1</code> 呼叫語法</span>
+            <span class="text-blue-400">零停機無縫熱切換</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 6 (formerly 5) ==================== -->
+    <section id="slide-6" class="slide flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 06 · 財務效益</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">成本與預算預估</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">新舊架構月花費模型推估：兼顧效能提升與長期支出最佳化</p>
+        </div>
+        <span class="badge-emerald text-xs font-semibold px-3 py-1.5 rounded-lg">
+          預算可控 · 性價比提升
+        </span>
+      </div>
+
+      <!-- Cost Model Table -->
+      <div class="my-auto space-y-4">
+        <div class="overflow-hidden border border-slate-200 rounded-xl bg-white text-xs md:text-sm">
+          <table class="w-full text-left">
+            <thead class="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+              <tr>
+                <th class="p-3">方案項目</th>
+                <th class="p-3">單價費率基準</th>
+                <th class="p-3">月查詢 10,000 次 (低載)</th>
+                <th class="p-3">月查詢 50,000 次 (中高載)</th>
+                <th class="p-3">成本結構備註</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr class="bg-slate-50/50">
+                <td class="p-3 font-semibold text-slate-500">舊版現狀 (CSE)</td>
+                <td class="p-3">免額每日100次，超量 $5/千次</td>
+                <td class="p-3 font-semibold">$35 USD</td>
+                <td class="p-3 font-semibold">$235 USD</td>
+                <td class="p-3 text-slate-500">2027 即將失效歸零</td>
+              </tr>
+              <tr class="hover:bg-blue-50/40">
+                <td class="p-3 font-bold text-blue-700">新版 軌道 1: Agent Search</td>
+                <td class="p-3">Standard 檢索約 $1.5/千次</td>
+                <td class="p-3 text-blue-950 font-bold">~$15 USD <span class="text-xs text-slate-400">(+微量索引費)</span></td>
+                <td class="p-3 text-blue-950 font-bold">~$75 USD <span class="text-xs text-slate-400">(+微量索引費)</span></td>
+                <td class="p-3 text-xs text-slate-500">處理 50 個核心白名單網站</td>
+              </tr>
+              <tr class="hover:bg-blue-50/40">
+                <td class="p-3 font-bold text-emerald-700">新版 軌道 2: Serper (主)</td>
+                <td class="p-3">全網檢索約 $1.0/千次</td>
+                <td class="p-3 text-emerald-950 font-bold">~$10 USD</td>
+                <td class="p-3 text-emerald-950 font-bold">~$50 USD</td>
+                <td class="p-3 text-xs text-slate-500">處理不限站點之即時查詢</td>
+              </tr>
+              <tr class="bg-blue-50/80 font-bold text-blue-900 border-t-2 border-blue-200">
+                <td class="p-3">新架構整合月預估</td>
+                <td class="p-3">分流綜合單價更便宜</td>
+                <td class="p-3 text-base text-blue-700">約 $25 ~ $35 USD</td>
+                <td class="p-3 text-base text-blue-700">約 $125 ~ $145 USD</td>
+                <td class="p-3 text-xs text-emerald-700 font-semibold">總體花費甚至低於舊版！</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <span class="font-bold text-slate-800 block mb-1">1. 單元查詢成本更低</span>
+            Serper ($1/k) 比舊版 CSE ($5/k) 便宜 80%，大量查詢反而享有顯著成本優勢。
+          </div>
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <span class="font-bold text-slate-800 block mb-1">2. 索引維持費可控</span>
+            初期僅放入約 30~50 個核心站，採用 Basic Indexing，每月索引儲存費估計小於 $10 USD。
+          </div>
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <span class="font-bold text-slate-800 block mb-1">3. 避免高額加購功能</span>
+            初期不啟用昂貴的進階生成式總結 Add-on（$4/k），回歸單純提取檢索，控制預算膨脹。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 7 (formerly 6) ==================== -->
+    <section id="slide-7" class="slide flex-col w-full bg-white rounded-2xl p-8 md:p-12 custom-shadow border border-slate-200">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="badge-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Chapter 07 · 決策與協作</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">需要主管幫忙拍板的事項</h2>
+          <p class="text-slate-600 mt-1 text-sm md:text-base">推動專案落地之 4 大關鍵決策節點與跨部門資源協調需求</p>
+        </div>
+        <span class="badge-amber text-xs font-semibold px-3 py-1.5 rounded-lg">
+          待決策事項 (Action Items)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-auto">
+        <!-- Item 1 -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-blue-400 transition-all flex items-start space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            1
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-1">拍板第一批核心網站白名單 (約 30~40 域)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              團隊已初步盤點出 25 個常用規格站（包含半導體大廠官網、JEDEC、SEMICON、各國專利檢索）。需主管審閱並確認是否有遺漏之機密或核心合作夥伴網站。
+            </p>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-blue-400 transition-all flex items-start space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            2
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-1">第三方供應商 (Serper.dev) 採購與法務備查</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              採購費用小於 $50 USD/月（可走小額雲端採購），但由於涉及外部 SERP 資料來源，需主管協助推動資安與法務簡易會簽，確保免除合規疑慮。
+            </p>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-blue-400 transition-all flex items-start space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            3
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-1">GCP 權限授權 (Discovery Engine / IAM)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              需在公司主要 GCP Project 開通 <code>Discovery Engine API</code>，並核發 <code>roles/discoveryengine.editor</code> 權限予專案服務帳號以建立 Data Store。
+            </p>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-blue-400 transition-all flex items-start space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            4
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-1">雙軌並行 (Shadow Run) 驗收指標拍板</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              預計 11 月全月進行新舊 API 比對。需主管核准驗收準則：<strong>「新搜尋 Recall ≥ 95%、搜尋延遲 ≤ 1.2 秒、零敏感製程詞外洩」</strong>即可切換。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-900">
+        <div>
+          <strong>專案承諾：</strong> 若上述項目本週完成核准，預計 10 月底完成環境佈署與 PoC，保證於 2026/12/31 前平順切換，零停機維運。
+        </div>
+        <span class="font-bold text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-300">
+          Ready for Execution
+        </span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation & Controls Bar -->
+  <footer class="w-full bg-white border-t border-slate-200 py-3 px-8 flex justify-between items-center z-20">
+    <div class="flex items-center space-x-2">
+      <!-- Indicators dots (7 dots) -->
+      <div id="dotContainer" class="flex space-x-1.5">
+        <button onclick="goToSlide(1)" class="w-2.5 h-2.5 rounded-full bg-blue-600 transition-all"></button>
+        <button onclick="goToSlide(2)" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+        <button onclick="goToSlide(3)" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+        <button onclick="goToSlide(4)" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+        <button onclick="goToSlide(5)" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+        <button onclick="goToSlide(6)" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+        <button onclick="goToSlide(7)" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+      </div>
+      <span class="text-xs text-slate-400 ml-2 hidden sm:inline">支援方向鍵 (← / →) 切換頁面</span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex items-center space-x-3">
+      <button id="prevBtn" onclick="prevSlide()" class="px-4 py-2 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-50 text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        上一頁
+      </button>
+
+      <button id="nextBtn" onclick="nextSlide()" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center">
+        下一頁
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Slide Controller Logic -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 7;
+
+    function updateSlide() {
+      // Toggle slide visibility
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) {
+          if (i === currentSlide) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        }
+      }
+
+      // Update Header Indicator
+      document.getElementById('currentSlideNum').innerText = currentSlide;
+
+      // Update Dots
+      const dots = document.getElementById('dotContainer').children;
+      for (let i = 0; i < dots.length; i++) {
+        if (i + 1 === currentSlide) {
+          dots[i].className = 'w-6 h-2.5 rounded-full bg-blue-600 transition-all';
+        } else {
+          dots[i].className = 'w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all';
+        }
+      }
+
+      // Update Prev / Next button states
+      document.getElementById('prevBtn').disabled = (currentSlide === 1);
+      document.getElementById('nextBtn').disabled = (currentSlide === totalSlides);
+      if (currentSlide === totalSlides) {
+        document.getElementById('nextBtn').innerText = '已到末頁';
+      } else {
+        document.getElementById('nextBtn').innerHTML = `下一頁 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updateSlide();
+      }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Initialize state
+    updateSlide();
+  </script>
+</body>
+</html>
